@@ -7,25 +7,25 @@
 atlas = ExtResource("1_q36u3")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eee57"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lt80v"]
 atlas = ExtResource("1_q36u3")
-region = Rect2(80, 0, 16, 16)
+region = Rect2(90, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n3m6o"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhcy1"]
 atlas = ExtResource("1_q36u3")
-region = Rect2(64, 0, 16, 16)
+region = Rect2(72, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_baai4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnyuy"]
 atlas = ExtResource("1_q36u3")
-region = Rect2(48, 0, 16, 16)
+region = Rect2(18, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jwpvx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjgtx"]
 atlas = ExtResource("1_q36u3")
-region = Rect2(32, 0, 16, 16)
+region = Rect2(36, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8ury8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sl8ov"]
 atlas = ExtResource("1_q36u3")
-region = Rect2(16, 0, 16, 16)
+region = Rect2(54, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hmvxf"]
 animations = [{
@@ -39,7 +39,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eee57")
+"texture": SubResource("AtlasTexture_lt80v")
 }],
 "loop": true,
 "name": &"jump",
@@ -47,7 +47,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_n3m6o")
+"texture": SubResource("AtlasTexture_jhcy1")
 }],
 "loop": true,
 "name": &"skid",
@@ -55,13 +55,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_baai4")
+"texture": SubResource("AtlasTexture_vnyuy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jwpvx")
+"texture": SubResource("AtlasTexture_gjgtx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8ury8")
+"texture": SubResource("AtlasTexture_sl8ov")
 }],
 "loop": true,
 "name": &"walk",
@@ -76,9 +76,10 @@ script = ExtResource("1_xh76f")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+texture_repeat = 1
 position = Vector2(0, -8)
 frames = SubResource("SpriteFrames_hmvxf")
-animation = &"skid"
+animation = &"idle"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)

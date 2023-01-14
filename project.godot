@@ -51,6 +51,10 @@ run={
 ]
 }
 
+[physics]
+
+2d/run_on_separate_thread=true
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
