@@ -51,6 +51,11 @@ run={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Entities"
+
 [physics]
 
 2d/run_on_separate_thread=true

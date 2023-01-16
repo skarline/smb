@@ -72,6 +72,7 @@ animations = [{
 size = Vector2(10, 12)
 
 [node name="Player" type="CharacterBody2D"]
+slide_on_ceiling = false
 script = ExtResource("1_xh76f")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -82,5 +83,6 @@ frames = SubResource("SpriteFrames_hmvxf")
 animation = &"idle"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -7)
 shape = SubResource("RectangleShape2D_t120l")

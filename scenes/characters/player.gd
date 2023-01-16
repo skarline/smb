@@ -28,15 +28,16 @@ var is_falling = false
 var is_skiding = false
 
 var direction = 0.0
-var h_speed = 0.0
+var speed_scale = 0.0
 
-var max_h_speed = MAX_WALK_SPEED
+var max_speed = MAX_WALK_SPEED
 var acceleration = WALK_ACCELERATION
 
 var speed_threshold: int = 0
 
 # Nodes
 @onready var sprite = $Sprite
+@onready var hitbox = $Hitbox
 
 func _process(delta):
 	animate(delta)
@@ -45,8 +46,8 @@ func _physics_process(delta):
 	handle_input()
 	
 	handle_jump(delta)
-	handle_move(delta)
-
+	handle_walk(delta)
+	
 	move_and_slide()
 
 func handle_input():
@@ -56,9 +57,11 @@ func handle_input():
 func handle_jump(delta: float):
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump"):
-			if velocity.x < SPEED_THRESHOLD_1:
+			var speed = abs(velocity.x)
+			
+			if speed < SPEED_THRESHOLD_1:
 				speed_threshold = 0
-			elif velocity.x < SPEED_THRESHOLD_2:
+			elif speed < SPEED_THRESHOLD_2:
 				speed_threshold = 1
 			else:
 				speed_threshold = 2
@@ -75,56 +78,51 @@ func handle_jump(delta: float):
 	is_jumping = velocity.y < 0.0
 	is_falling = velocity.y > 0.0
 
-func handle_move(delta: float):
-	var target_speed = 0.0
-	
-	if velocity.x and is_on_floor():
-		is_skiding = sign(velocity.x) < 0.0 != is_facing_left
-		
-		if is_skiding:
-			if abs(velocity.x) < MIN_SKID_SPEED:
-				velocity.x = 0.0
-	else:
-		is_skiding = false
-	
+func handle_walk(delta: float):
 	if direction:
 		if is_on_floor():
 			is_facing_left = direction < 0.0
+			is_skiding = velocity.x < 0.0 != is_facing_left
 			
 			if is_skiding:
-				max_h_speed = MAX_WALK_SPEED
+				max_speed = MAX_WALK_SPEED
 				acceleration = SKID_FRICTION
 			elif is_running:
-				max_h_speed = MAX_SPEED
+				max_speed = MAX_SPEED
 				acceleration = RUN_ACCELERATION
 			else:
-				max_h_speed = MAX_WALK_SPEED
+				max_speed = MAX_WALK_SPEED
 				acceleration = WALK_ACCELERATION
+		else:
+			max_speed = max(abs(velocity.x), MAX_WALK_SPEED)
 		
-		target_speed = direction * max_h_speed
+		var target_speed = direction * max_speed
 		
 		velocity.x = move_toward(velocity.x, target_speed, acceleration * delta)
 	elif is_on_floor() and velocity.x:
-		if abs(velocity.x) < MIN_WALK_SPEED:
+		var min_speed = MIN_SKID_SPEED if is_skiding else MIN_WALK_SPEED
+		
+		if abs(velocity.x) < min_speed:
 			velocity.x = 0.0
 		else:
 			velocity.x = move_toward(velocity.x, 0.0, WALK_FRICTION * delta)
+		
+		if not velocity.x:
+			is_skiding = false
 	
-	h_speed = abs(velocity.x) / MAX_SPEED
+	speed_scale = abs(velocity.x) / MAX_SPEED
 
 func animate(delta: float):
 	sprite.flip_h = is_facing_left
-	sprite.speed_scale = max(2.0, h_speed * 5.0)
+	sprite.speed_scale = max(2.0, speed_scale * 5.0)
 	
 	if is_falling:
 		sprite.stop()
-	if is_jumping:
+	elif is_jumping:
 		sprite.play("jump")
-	elif is_on_floor():
-		if velocity.x:
-			if is_skiding:
-				sprite.play("skid")
-			else:
-				sprite.play("walk")
-		else:
-			sprite.play("idle")
+	elif is_skiding:
+		sprite.play("skid")
+	elif velocity.x:
+		sprite.play("walk")
+	else:
+		sprite.play("idle")
