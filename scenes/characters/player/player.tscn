@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://ci7j27wa3o4nh"]
+[gd_scene load_steps=11 format=3 uid="uid://dgm8ukspivofd"]
 
+[ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_1fmyp"]
 [ext_resource type="Texture2D" uid="uid://cmwbahwwch8ro" path="res://assets/sprites/mario_small.png" id="1_q36u3"]
-[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_xh76f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r34y0"]
 atlas = ExtResource("1_q36u3")
@@ -72,17 +72,26 @@ animations = [{
 size = Vector2(10, 12)
 
 [node name="Player" type="CharacterBody2D"]
-slide_on_ceiling = false
-script = ExtResource("1_xh76f")
+floor_stop_on_slope = false
+floor_max_angle = 0.174533
+script = ExtResource("1_1fmyp")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(0, -8)
-frames = SubResource("SpriteFrames_hmvxf")
+sprite_frames = SubResource("SpriteFrames_hmvxf")
 animation = &"idle"
 
-[node name="Hitbox" type="CollisionShape2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="."]
 visible = false
 position = Vector2(0, -7)
+
+[node name="Shape" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_t120l")
+
+[node name="CollisionShape" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(-5, -2, -4, -1, 4, -1, 5, -2, 5, -2, 0, -13, -5, -2)
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

@@ -1,11 +1,11 @@
 extends CharacterBody2D
 
 # Physics
+const MIN_SPEED = 5.07
 const MAX_SPEED = 174.93
 const MAX_WALK_SPEED = 106.67
 const MAX_FALL_SPEED = 273.07
 const MIN_SKID_SPEED = 38.4
-const MIN_WALK_SPEED = 5.07
 
 const WALK_ACCELERATION = 152.0
 const RUN_ACCELERATION = 228.0
@@ -80,9 +80,10 @@ func handle_jump(delta: float):
 
 func handle_walk(delta: float):
 	if direction:
-		if is_on_floor():
-			is_facing_left = direction < 0.0
-			is_skiding = velocity.x < 0.0 != is_facing_left
+		if not velocity.y:
+			if velocity.x:
+				is_facing_left = direction < 0.0
+				is_skiding = velocity.x < 0.0 != is_facing_left
 			
 			if is_skiding:
 				max_speed = MAX_WALK_SPEED
@@ -99,15 +100,13 @@ func handle_walk(delta: float):
 		var target_speed = direction * max_speed
 		
 		velocity.x = move_toward(velocity.x, target_speed, acceleration * delta)
-	elif is_on_floor() and velocity.x:
-		var min_speed = MIN_SKID_SPEED if is_skiding else MIN_WALK_SPEED
-		
-		if abs(velocity.x) < min_speed:
+	elif not velocity.y and velocity.x:
+		if abs(velocity.x) < MIN_SPEED:
 			velocity.x = 0.0
 		else:
-			velocity.x = move_toward(velocity.x, 0.0, WALK_FRICTION * delta)
+			velocity.x = move_toward(velocity.x, 0.0, acceleration * delta)
 		
-		if not velocity.x:
+		if abs(velocity.x) < MIN_SKID_SPEED:
 			is_skiding = false
 	
 	speed_scale = abs(velocity.x) / MAX_SPEED
@@ -126,3 +125,6 @@ func animate(delta: float):
 		sprite.play("walk")
 	else:
 		sprite.play("idle")
+
+func _on_hitbox_body_entered(body):
+	pass
