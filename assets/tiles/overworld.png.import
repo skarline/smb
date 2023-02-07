@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj1rn1d5hodps"
-path="res://.godot/imported/mario_small.png-6b24da1ac513e58c84fd8e705ef49769.ctex"
+uid="uid://cbw3nxgte4ibj"
+path="res://.godot/imported/overworld.png-1d11005b9b483f56d16584ec2fb8dea5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/mario_small.png"
-dest_files=["res://.godot/imported/mario_small.png-6b24da1ac513e58c84fd8e705ef49769.ctex"]
+source_file="res://assets/tiles/overworld.png"
+dest_files=["res://.godot/imported/overworld.png-1d11005b9b483f56d16584ec2fb8dea5.ctex"]
 
 [params]
 
