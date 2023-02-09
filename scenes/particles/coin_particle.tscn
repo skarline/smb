@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://33vflrs2k423"]
+
+[ext_resource type="Script" path="res://scenes/particles/coin_particle.gd" id="1_eoh4k"]
+[ext_resource type="Texture2D" uid="uid://cfrv0jhs583dq" path="res://assets/sprites/coin_particle.png" id="1_i874j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sun62"]
+atlas = ExtResource("1_i874j")
+region = Rect2(0, 0, 8, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63liv"]
+atlas = ExtResource("1_i874j")
+region = Rect2(8, 0, 8, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1s88"]
+atlas = ExtResource("1_i874j")
+region = Rect2(16, 0, 8, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_guug3"]
+atlas = ExtResource("1_i874j")
+region = Rect2(24, 0, 8, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rklwm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sun62")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63liv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1s88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_guug3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="CoinParticle" type="Node2D"]
+script = ExtResource("1_eoh4k")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_rklwm")
+frame_progress = 0.636741
+speed_scale = 2.0
+offset = Vector2(2.08165e-12, -16)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

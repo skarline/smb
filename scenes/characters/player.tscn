@@ -1,30 +1,30 @@
-[gd_scene load_steps=11 format=3 uid="uid://dgm8ukspivofd"]
+[gd_scene load_steps=11 format=3 uid="uid://ospf0uke1btl"]
 
-[ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_1fmyp"]
-[ext_resource type="Texture2D" uid="uid://cmwbahwwch8ro" path="res://assets/sprites/mario_small.png" id="1_q36u3"]
+[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_wgnfc"]
+[ext_resource type="Texture2D" uid="uid://cmwbahwwch8ro" path="res://assets/sprites/mario_small.png" id="2_gatvr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r34y0"]
-atlas = ExtResource("1_q36u3")
+atlas = ExtResource("2_gatvr")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lt80v"]
-atlas = ExtResource("1_q36u3")
+atlas = ExtResource("2_gatvr")
 region = Rect2(90, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jhcy1"]
-atlas = ExtResource("1_q36u3")
+atlas = ExtResource("2_gatvr")
 region = Rect2(72, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vnyuy"]
-atlas = ExtResource("1_q36u3")
+atlas = ExtResource("2_gatvr")
 region = Rect2(18, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gjgtx"]
-atlas = ExtResource("1_q36u3")
+atlas = ExtResource("2_gatvr")
 region = Rect2(36, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sl8ov"]
-atlas = ExtResource("1_q36u3")
+atlas = ExtResource("2_gatvr")
 region = Rect2(54, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hmvxf"]
@@ -74,7 +74,7 @@ size = Vector2(10, 12)
 [node name="Player" type="CharacterBody2D"]
 floor_stop_on_slope = false
 floor_max_angle = 0.174533
-script = ExtResource("1_1fmyp")
+script = ExtResource("1_wgnfc")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

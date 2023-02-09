@@ -1,0 +1,95 @@
+[gd_scene load_steps=11 format=3 uid="uid://df00q74jhgta4"]
+
+[ext_resource type="Script" path="res://scenes/blocks/block.gd" id="1_sbtmq"]
+[ext_resource type="Texture2D" uid="uid://cpwjveku4gyqg" path="res://assets/sprites/question_mark_block.png" id="2_40ef5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xh77r"]
+atlas = ExtResource("2_40ef5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eka6x"]
+atlas = ExtResource("2_40ef5")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ov72j"]
+atlas = ExtResource("2_40ef5")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hyd5a"]
+atlas = ExtResource("2_40ef5")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vk0g8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xh77r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xh77r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xh77r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eka6x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ov72j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hyd5a")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4bs6b"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_j8kaa"]
+resource_name = "hit"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.25),
+"transitions": PackedFloat32Array(0.5, 2, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2.08165e-12, -6), Vector2(2.08165e-12, 2), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7i2l0"]
+_data = {
+"hit": SubResource("Animation_j8kaa")
+}
+
+[node name="QuestionBlock" type="StaticBody2D"]
+script = ExtResource("1_sbtmq")
+block_type = "question"
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_vk0g8")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_4bs6b")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite")
+libraries = {
+"": SubResource("AnimationLibrary_7i2l0")
+}

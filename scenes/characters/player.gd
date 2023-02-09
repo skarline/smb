@@ -49,6 +49,8 @@ func _physics_process(delta):
 	handle_walk(delta)
 	
 	move_and_slide()
+	
+	handle_collision()
 
 func handle_input():
 	direction = Input.get_axis("move_left", "move_right")
@@ -111,9 +113,24 @@ func handle_walk(delta: float):
 	
 	speed_scale = abs(velocity.x) / MAX_SPEED
 
+func handle_collision():
+	var collision = get_last_slide_collision()
+	
+	if not collision:
+		return
+	
+	var angle = round(collision.get_angle() * 180 / PI)
+	
+	# head collision
+	if angle == 180:
+		var collider = collision.get_collider()
+		
+		if collider.has_method("on_hit"):
+			collider.on_hit(self)
+
 func animate(delta: float):
 	sprite.flip_h = is_facing_left
-	sprite.speed_scale = max(2.0, speed_scale * 5.0)
+	sprite.speed_scale = max(1.75, speed_scale * 5.0)
 	
 	if is_falling:
 		sprite.stop()
@@ -121,7 +138,7 @@ func animate(delta: float):
 		sprite.play("jump")
 	elif is_skiding:
 		sprite.play("skid")
-	elif velocity.x:
+	elif direction or velocity.x:
 		sprite.play("walk")
 	else:
 		sprite.play("idle")

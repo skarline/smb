@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3i6uxhhpqacq"]
+
+[ext_resource type="PackedScene" uid="uid://df00q74jhgta4" path="res://scenes/blocks/question_block.tscn" id="1_a8bjj"]
+[ext_resource type="Texture2D" uid="uid://cbw3nxgte4ibj" path="res://assets/tiles/overworld.png" id="2_17f73"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcw05"]
+atlas = ExtResource("2_17f73")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_autxv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcw05")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BrickBlock" instance=ExtResource("1_a8bjj")]
+block_type = "brick"
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_autxv")

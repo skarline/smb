@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://scripts/global.gd"
+Physics="*res://global/physics.gd"
 
 [display]
 
