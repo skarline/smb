@@ -1,24 +1,31 @@
 extends CharacterBody2D
 
-# Physics
-const MIN_SPEED = 5.07
-const MAX_SPEED = 174.93
-const MAX_WALK_SPEED = 106.67
-const MAX_FALL_SPEED = 273.07
-const MIN_SKID_SPEED = 38.4
+# Formulae to convert the original game's sub-sub-sub pixels per frame units to
+# pixels per second:
 
-const WALK_ACCELERATION = 152.0
-const RUN_ACCELERATION = 228.0
-const WALK_FRICTION = 208.0
-const SKID_FRICTION = 416.0
+# Speed: x * (15 / 1024)
+# Acceleration: x * (225 / 256)
+
+# Physics
+const MIN_SPEED = 4.453125
+const MAX_SPEED = 153.75
+const MAX_WALK_SPEED = 93.75
+const MAX_FALL_SPEED = 270.0
+const MAX_FALL_SPEED_CAP = 240.0
+const MIN_SKID_SPEED = 33.75
+
+const WALK_ACCELERATION = 133.59375
+const RUN_ACCELERATION = 200.390625
+const WALK_FRICTION = 182.8125
+const SKID_FRICTION = 365.625
 
 # Jump physics vary based on horizontal speed thresholds
-const JUMP_SPEED = [-273.07, -273.07, -341.33]
-const LONG_JUMP_GRAVITY = [512.0, 480.0, 640.0]
-const GRAVITY = [1792.0, 1536.0, 2304.0]
+const JUMP_SPEED = [-240.0, -240.0, -300.0]
+const LONG_JUMP_GRAVITY = [450.0, 421.875, 562.5]
+const GRAVITY = [1575.0, 1350.0, 2025.0]
 
-const SPEED_THRESHOLD_1 = 68.27
-const SPEED_THRESHOLD_2 = 157.85
+const SPEED_THRESHOLD_1 = 60
+const SPEED_THRESHOLD_2 = 138.75
 
 # Input
 var is_facing_left = false
@@ -75,10 +82,13 @@ func handle_jump(delta: float):
 		if Input.is_action_pressed("jump") and not is_falling:
 			gravity = LONG_JUMP_GRAVITY[speed_threshold]
 		
-		velocity.y = min(MAX_FALL_SPEED, velocity.y + gravity * delta)
+		velocity.y = velocity.y + gravity * delta
+		
+		if velocity.y > MAX_FALL_SPEED:
+			velocity.y = MAX_FALL_SPEED_CAP
 	
 	is_jumping = velocity.y < 0.0
-	is_falling = velocity.y > 0.0
+	is_falling = not is_jumping and not is_on_floor()
 
 func handle_walk(delta: float):
 	if direction:
@@ -86,6 +96,12 @@ func handle_walk(delta: float):
 			if velocity.x:
 				is_facing_left = direction < 0.0
 				is_skiding = velocity.x < 0.0 != is_facing_left
+			
+			if is_skiding and abs(velocity.x) < MIN_SKID_SPEED:
+				is_skiding = false
+				velocity.x = 0.0
+				
+				return
 			
 			if is_skiding:
 				max_speed = MAX_WALK_SPEED
@@ -96,13 +112,18 @@ func handle_walk(delta: float):
 			else:
 				max_speed = MAX_WALK_SPEED
 				acceleration = WALK_ACCELERATION
+		elif abs(velocity.x) > MAX_WALK_SPEED:
+			max_speed = MAX_SPEED
 		else:
-			max_speed = max(abs(velocity.x), MAX_WALK_SPEED)
+			max_speed = MAX_WALK_SPEED
 		
 		var target_speed = direction * max_speed
 		
 		velocity.x = move_toward(velocity.x, target_speed, acceleration * delta)
 	elif not velocity.y and velocity.x:
+		if not is_skiding:
+			acceleration = WALK_FRICTION
+		
 		if abs(velocity.x) < MIN_SPEED:
 			velocity.x = 0.0
 		else:
