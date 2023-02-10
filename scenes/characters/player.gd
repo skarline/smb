@@ -8,7 +8,7 @@ extends CharacterBody2D
 
 # Physics
 const MIN_SPEED = 4.453125
-const MAX_SPEED = 153.75
+const MAX_SPEED = 253.75
 const MAX_WALK_SPEED = 93.75
 const MAX_FALL_SPEED = 270.0
 const MAX_FALL_SPEED_CAP = 240.0
@@ -149,7 +149,7 @@ func handle_collision():
 		if collider.has_method("on_hit"):
 			collider.on_hit(self)
 
-func animate(delta: float):
+func animate(_delta: float):
 	sprite.flip_h = is_facing_left
 	sprite.speed_scale = max(1.75, speed_scale * 5.0)
 	
@@ -164,5 +164,5 @@ func animate(delta: float):
 	else:
 		sprite.play("idle")
 
-func _on_hitbox_body_entered(body):
+func _on_hitbox_body_entered(_body):
 	pass

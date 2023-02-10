@@ -1,0 +1,94 @@
+[gd_scene load_steps=9 format=3 uid="uid://c2w3rwm0nwfxv"]
+
+[ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1_n114d"]
+[ext_resource type="FontFile" uid="uid://bkukv2ir5407k" path="res://assets/fonts/smb.ttf" id="1_qyf17"]
+[ext_resource type="Texture2D" uid="uid://dcooykk800xv0" path="res://assets/sprites/hud_coins.png" id="3_bnmj5"]
+
+[sub_resource type="Theme" id="Theme_rn8m4"]
+default_font = ExtResource("1_qyf17")
+default_font_size = 8
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxj6l"]
+atlas = ExtResource("3_bnmj5")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31oax"]
+atlas = ExtResource("3_bnmj5")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rfqwo"]
+atlas = ExtResource("3_bnmj5")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gv66n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxj6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxj6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31oax")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rfqwo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxj6l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_n114d")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_rn8m4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 16.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Score" type="Label" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+text = "Mario
+000000"
+
+[node name="Coins" type="Label" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+text = "
+  ×00"
+
+[node name="Icon" type="AnimatedSprite2D" parent="Control/HBoxContainer/Coins"]
+position = Vector2(12, 16)
+sprite_frames = SubResource("SpriteFrames_gv66n")
+
+[node name="World" type="Label" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+text = " World
+  1-1"
+
+[node name="Timer" type="Label" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+text = "  Time
+ "
