@@ -1,0 +1,75 @@
+[gd_scene load_steps=9 format=3 uid="uid://dyedtrdyumqly"]
+
+[ext_resource type="Script" path="res://scenes/characters/goomba.gd" id="1_kindd"]
+[ext_resource type="Texture2D" uid="uid://411uurvuibyl" path="res://assets/sprites/goomba.png" id="1_yukts"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwvxy"]
+atlas = ExtResource("1_yukts")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fs8li"]
+atlas = ExtResource("1_yukts")
+region = Rect2(17, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ordj"]
+atlas = ExtResource("1_yukts")
+region = Rect2(34, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t5uig"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwvxy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fs8li")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ordj")
+}],
+"loop": true,
+"name": &"stomp",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6j6xw"]
+size = Vector2(10, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ronvr"]
+size = Vector2(14, 12)
+
+[node name="Goomba" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 0
+script = ExtResource("1_kindd")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -7)
+rotation = -0.00495885
+sprite_frames = SubResource("SpriteFrames_t5uig")
+frame_progress = 0.896058
+speed_scale = 1.5
+
+[node name="Hitbox" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_6j6xw")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_ronvr")
+
+[node name="DeathTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
