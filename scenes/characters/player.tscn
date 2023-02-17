@@ -98,3 +98,4 @@ visible = false
 polygon = PackedVector2Array(-5, -2, -4, -1, 4, -1, 5, -2, 5, -2, 0, -13, -5, -2)
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

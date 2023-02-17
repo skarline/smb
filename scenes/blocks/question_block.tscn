@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://df00q74jhgta4"]
+[gd_scene load_steps=12 format=3 uid="uid://df00q74jhgta4"]
 
 [ext_resource type="Script" path="res://scenes/blocks/block.gd" id="1_sbtmq"]
 [ext_resource type="Texture2D" uid="uid://cpwjveku4gyqg" path="res://assets/sprites/question_mark_block.png" id="2_40ef5"]
@@ -70,14 +70,34 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(2.08165e-12, -6), Vector2(2.08165e-12, 2), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_ab2p2"]
+resource_name = "release"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ItemSprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2.08165e-12, -16)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7i2l0"]
 _data = {
-"hit": SubResource("Animation_j8kaa")
+"hit": SubResource("Animation_j8kaa"),
+"release": SubResource("Animation_ab2p2")
 }
 
 [node name="QuestionBlock" type="StaticBody2D"]
 script = ExtResource("1_sbtmq")
 block_type = "question"
+
+[node name="ItemSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(8, 8)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(8, 8)
@@ -93,3 +113,5 @@ root_node = NodePath("../Sprite")
 libraries = {
 "": SubResource("AnimationLibrary_7i2l0")
 }
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

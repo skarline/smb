@@ -196,3 +196,8 @@ func _on_hitbox_area_entered(area: Area2D):
 		else:
 			# TODO: take hit
 			pass
+
+func _on_hitbox_body_entered(body: Node2D):
+	if body.is_in_group("items"):
+		body.queue_free()
+		# TODO: handle

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dyedtrdyumqly"]
+[gd_scene load_steps=10 format=3 uid="uid://dyedtrdyumqly"]
 
 [ext_resource type="Script" path="res://scenes/characters/goomba.gd" id="1_kindd"]
 [ext_resource type="Texture2D" uid="uid://411uurvuibyl" path="res://assets/sprites/goomba.png" id="1_yukts"]
+[ext_resource type="PackedScene" uid="uid://cirx0ipaw2v4s" path="res://scenes/behaviors/walk_behavior.tscn" id="3_k3hjn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cwvxy"]
 atlas = ExtResource("1_yukts")
@@ -51,7 +52,7 @@ script = ExtResource("1_kindd")
 position = Vector2(0, -7)
 rotation = -0.00495885
 sprite_frames = SubResource("SpriteFrames_t5uig")
-frame_progress = 0.896058
+frame_progress = 0.659235
 speed_scale = 1.5
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -70,6 +71,9 @@ shape = SubResource("RectangleShape2D_ronvr")
 
 [node name="DeathTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="WalkBehavior" parent="." instance=ExtResource("3_k3hjn")]
+is_facing_left = true
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
