@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dyedtrdyumqly"]
+[gd_scene load_steps=9 format=3 uid="uid://dyedtrdyumqly"]
 
 [ext_resource type="Script" path="res://scenes/characters/goomba.gd" id="1_kindd"]
 [ext_resource type="Texture2D" uid="uid://411uurvuibyl" path="res://assets/sprites/goomba.png" id="1_yukts"]
@@ -41,9 +41,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6j6xw"]
 size = Vector2(10, 6)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ronvr"]
-size = Vector2(14, 12)
-
 [node name="Goomba" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 0
 script = ExtResource("1_kindd")
@@ -64,10 +61,9 @@ collision_mask = 2
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_6j6xw")
 
-[node name="CollisionShape" type="CollisionShape2D" parent="."]
+[node name="CollisionShape" type="CollisionPolygon2D" parent="."]
 visible = false
-position = Vector2(0, -6)
-shape = SubResource("RectangleShape2D_ronvr")
+polygon = PackedVector2Array(-5, -12, -7, -10, -7, -5, -2, 0, 2, 0, 7, -5, 7, -10, 5, -12)
 
 [node name="DeathTimer" type="Timer" parent="."]
 one_shot = true

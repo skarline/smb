@@ -16,7 +16,6 @@ position = Vector2(8, -7)
 texture = ExtResource("1_pyqov")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(8, -7)
 shape = SubResource("RectangleShape2D_32inq")
 

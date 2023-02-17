@@ -50,8 +50,8 @@ var speed_threshold: int = 0
 var hitbox_just_collided = false
 
 # Nodes
-@onready var sprite = $Sprite
-@onready var hitbox = $Hitbox
+@onready var sprite: AnimatedSprite2D = $Sprite
+@onready var hitbox: Area2D = $Hitbox
 
 func _process(delta):
 	animate(delta)
@@ -160,8 +160,8 @@ func handle_collision():
 	if angle == 180:
 		var collider = collision.get_collider()
 		
-		if collider.has_method("on_hit"):
-			collider.on_hit(self)
+		if collider.has_method("hit"):
+			collider.hit(self)
 
 func animate(_delta: float):
 	sprite.flip_h = is_facing_left
@@ -188,10 +188,10 @@ func _on_hitbox_area_entered(area: Area2D):
 	var body = area.get_parent()
 
 	if body.is_in_group("enemies"):
-		var stomp = velocity.y > 0 and $Hitbox.global_position.y < area.global_position.y
+		var stomp = velocity.y > 0 and hitbox.global_position.y < area.global_position.y
 
 		if stomp:
-			if body.has_method("on_stomp") and body.on_stomp():
+			if body.has_method("stomp") and body.stomp():
 				velocity.y = fmod(velocity.y, STOMP_SPEED_CAP) - STOMP_SPEED
 		else:
 			# TODO: take hit

@@ -1,11 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://dg1br2bmqi3lh"]
+[gd_scene load_steps=15 format=3 uid="uid://dai6jx4tbceo4"]
 
-[ext_resource type="PackedScene" uid="uid://c3i6uxhhpqacq" path="res://scenes/blocks/brick_block.tscn" id="1_1qp7x"]
 [ext_resource type="PackedScene" uid="uid://df00q74jhgta4" path="res://scenes/blocks/question_block.tscn" id="1_o10pm"]
 [ext_resource type="Texture2D" uid="uid://cbw3nxgte4ibj" path="res://assets/tiles/overworld.png" id="2_riuat"]
 [ext_resource type="PackedScene" uid="uid://ospf0uke1btl" path="res://scenes/characters/player.tscn" id="3_vdiu6"]
 [ext_resource type="PackedScene" uid="uid://dyedtrdyumqly" path="res://scenes/characters/goomba.tscn" id="4_38siv"]
 [ext_resource type="PackedScene" uid="uid://dgnp0rhnp0sux" path="res://scenes/stage/camera.tscn" id="4_w1g1h"]
+[ext_resource type="PackedScene" uid="uid://b7cjtxj3eoflq" path="res://scenes/blocks/brick_block.tscn" id="7_0l3fy"]
 [ext_resource type="PackedScene" uid="uid://dniod3j5miocj" path="res://scenes/items/red_mushroom.tscn" id="7_a2tt0"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_gxp4n"]
@@ -272,13 +272,13 @@ layer_0/tile_data = PackedInt32Array(917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 9
 [node name="Objects" type="Node2D" parent="."]
 position = Vector2(0, 240)
 
-[node name="BrickBlock" parent="Objects" instance=ExtResource("1_1qp7x")]
+[node name="BrickBlock" parent="Objects" instance=ExtResource("7_0l3fy")]
 position = Vector2(320, -96)
 
-[node name="BrickBlock2" parent="Objects" instance=ExtResource("1_1qp7x")]
+[node name="BrickBlock2" parent="Objects" instance=ExtResource("7_0l3fy")]
 position = Vector2(352, -96)
 
-[node name="BrickBlock3" parent="Objects" instance=ExtResource("1_1qp7x")]
+[node name="BrickBlock3" parent="Objects" instance=ExtResource("7_0l3fy")]
 position = Vector2(384, -96)
 
 [node name="QuestionBlock" parent="Objects" instance=ExtResource("1_o10pm")]

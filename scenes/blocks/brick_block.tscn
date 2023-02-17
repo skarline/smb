@@ -1,25 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3i6uxhhpqacq"]
+[gd_scene load_steps=3 format=3 uid="uid://b7cjtxj3eoflq"]
 
-[ext_resource type="PackedScene" uid="uid://df00q74jhgta4" path="res://scenes/blocks/question_block.tscn" id="1_a8bjj"]
-[ext_resource type="Texture2D" uid="uid://cbw3nxgte4ibj" path="res://assets/tiles/overworld.png" id="2_17f73"]
+[ext_resource type="PackedScene" uid="uid://c3i6uxhhpqacq" path="res://scenes/blocks/block.tscn" id="1_j4oyx"]
+[ext_resource type="Script" path="res://scenes/blocks/brick_block.gd" id="2_78fv1"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kcw05"]
-atlas = ExtResource("2_17f73")
-region = Rect2(16, 0, 16, 16)
+[node name="BrickBlock" instance=ExtResource("1_j4oyx")]
+script = ExtResource("2_78fv1")
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_autxv"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kcw05")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[node name="BrickBlock" instance=ExtResource("1_a8bjj")]
-block_type = "brick"
-
-[node name="Sprite" parent="." index="0"]
-sprite_frames = SubResource("SpriteFrames_autxv")
+[node name="MultiCoinTimer" type="Timer" parent="." index="5"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpwjveku4gyqg"
-path="res://.godot/imported/question_mark_block.png-d048fd2bffdfd334f0ad1c7c26f256a5.ctex"
+uid="uid://swkwgu4mnlcq"
+path="res://.godot/imported/empty_block.png-f2398c14fe54fde1ec37753e0fa5fb70.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/question_mark_block.png"
-dest_files=["res://.godot/imported/question_mark_block.png-d048fd2bffdfd334f0ad1c7c26f256a5.ctex"]
+source_file="res://assets/sprites/empty_block.png"
+dest_files=["res://.godot/imported/empty_block.png-f2398c14fe54fde1ec37753e0fa5fb70.ctex"]
 
 [params]
 

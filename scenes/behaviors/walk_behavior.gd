@@ -1,5 +1,7 @@
 extends Node
 
+class_name WalkBehavior
+
 @export var speed: float = 32.0
 @export var is_facing_left: bool = false
 @export var handle_movement: bool = false
@@ -10,7 +12,7 @@ func _physics_process(delta: float):
 	handle_collision()
 
 	parent.velocity.x = -speed if is_facing_left else speed
-	parent.velocity.y += Physics.GRAVITY * delta
+	parent.velocity.y += min(Physics.MAX_FALL_SPEED, Physics.GRAVITY * delta)
 
 	if handle_movement:
 		parent.move_and_slide()

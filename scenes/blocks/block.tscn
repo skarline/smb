@@ -1,0 +1,111 @@
+[gd_scene load_steps=12 format=3 uid="uid://c3i6uxhhpqacq"]
+
+[ext_resource type="Script" path="res://scenes/blocks/block.gd" id="1_uyjdn"]
+[ext_resource type="Texture2D" uid="uid://cbw3nxgte4ibj" path="res://assets/tiles/overworld.png" id="2_eot6r"]
+[ext_resource type="Texture2D" uid="uid://swkwgu4mnlcq" path="res://assets/sprites/empty_block.png" id="3_s1bui"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcw05"]
+atlas = ExtResource("2_eot6r")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4lmm"]
+atlas = ExtResource("3_s1bui")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_autxv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcw05")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4lmm")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4bs6b"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3o3j"]
+size = Vector2(8, 4)
+
+[sub_resource type="Animation" id="Animation_j8kaa"]
+resource_name = "hit"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.25),
+"transitions": PackedFloat32Array(0.5, 2, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2.08165e-12, -6), Vector2(2.08165e-12, 2), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ab2p2"]
+resource_name = "release"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ContainedItemSprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2.08165e-12, -16)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7i2l0"]
+_data = {
+"hit": SubResource("Animation_j8kaa"),
+"release": SubResource("Animation_ab2p2")
+}
+
+[node name="Block" type="StaticBody2D"]
+script = ExtResource("1_uyjdn")
+
+[node name="ContainedItemSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(8, 8)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_autxv")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_4bs6b")
+
+[node name="EntityDetectionArea" type="Area2D" parent="."]
+visible = false
+position = Vector2(8, 0)
+collision_layer = 0
+collision_mask = 6
+
+[node name="Shape" type="CollisionShape2D" parent="EntityDetectionArea"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_m3o3j")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite")
+libraries = {
+"": SubResource("AnimationLibrary_7i2l0")
+}
+
+[connection signal="body_entered" from="EntityDetectionArea" to="." method="_on_entity_detection_area_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
