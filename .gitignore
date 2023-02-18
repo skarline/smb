@@ -12,3 +12,5 @@ export_presets.cfg
 # OS-specific ignores
 *.DS_Store
 Thumbs.db
+
+todo.md

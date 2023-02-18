@@ -58,4 +58,3 @@ is_invisible = false
 
 [node name="Sprite" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_f1mhg")
-animation = &"default"

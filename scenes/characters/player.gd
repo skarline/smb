@@ -14,7 +14,7 @@ const MAX_SPEED = 153.75
 const MAX_WALK_SPEED = 93.75
 const MAX_FALL_SPEED = 270.0
 const MAX_FALL_SPEED_CAP = 240.0
-const MIN_SKID_SPEED = 33.75
+const MIN_SLOW_DOWN_SPEED = 33.75
 
 const WALK_ACCELERATION = 133.59375
 const RUN_ACCELERATION = 200.390625
@@ -38,16 +38,17 @@ var is_running = false
 var is_jumping = false
 var is_falling = false
 var is_skiding = false
+var is_crouching = false
+var is_big = false
 
-var direction = 0.0
+var input_axis: Vector2 = Vector2.ZERO
 var speed_scale = 0.0
 
+var min_speed = MIN_SPEED	
 var max_speed = MAX_WALK_SPEED
 var acceleration = WALK_ACCELERATION
 
 var speed_threshold: int = 0
-
-var hitbox_just_collided = false
 
 # Nodes
 @onready var sprite: AnimatedSprite2D = $Sprite
@@ -57,20 +58,26 @@ func _process(delta):
 	animate(delta)
 
 func _physics_process(delta):
-	hitbox_just_collided = false
-	
 	handle_input()
 	
 	handle_jump(delta)
 	handle_walk(delta)
-	
+
 	move_and_slide()
 	
 	handle_collision()
 
 func handle_input():
-	direction = Input.get_axis("move_left", "move_right")
-	is_running = Input.is_action_pressed("run")
+	input_axis.x = Input.get_axis("move_left", "move_right")
+	input_axis.y = Input.get_axis("move_up", "move_down")
+	
+	if is_on_floor():
+		is_running = Input.is_action_pressed("run")
+		is_crouching = Input.is_action_pressed("move_down")
+
+		if is_crouching and input_axis.x:
+			is_crouching = false
+			input_axis.x = 0.0
 
 func handle_jump(delta: float):
 	if is_on_floor():
@@ -105,25 +112,22 @@ func handle_jump(delta: float):
 		is_falling = false
 
 func handle_walk(delta: float):
-	if direction:
+	if input_axis.x:
 		if is_on_floor():
 			if velocity.x:
-				is_facing_left = direction < 0.0
+				is_facing_left = input_axis.x < 0.0
 				is_skiding = velocity.x < 0.0 != is_facing_left
-			
-			if is_skiding and abs(velocity.x) < MIN_SKID_SPEED:
-				is_skiding = false
-				velocity.x = 0.0
 				
-				return
-			
 			if is_skiding:
+				min_speed = MIN_SLOW_DOWN_SPEED
 				max_speed = MAX_WALK_SPEED
 				acceleration = SKID_FRICTION
 			elif is_running:
+				min_speed = MIN_SPEED
 				max_speed = MAX_SPEED
 				acceleration = RUN_ACCELERATION
 			else:
+				min_speed = MIN_SPEED
 				max_speed = MAX_WALK_SPEED
 				acceleration = WALK_ACCELERATION
 		elif is_running and abs(velocity.x) > MAX_WALK_SPEED:
@@ -131,19 +135,22 @@ func handle_walk(delta: float):
 		else:
 			max_speed = MAX_WALK_SPEED
 		
-		var target_speed = direction * max_speed
+		var target_speed = input_axis.x * max_speed
 		
 		velocity.x = move_toward(velocity.x, target_speed, acceleration * delta)
 	elif is_on_floor() and velocity.x:
 		if not is_skiding:
 			acceleration = WALK_FRICTION
 		
-		if abs(velocity.x) < MIN_SPEED:
+		if input_axis.y:
+			min_speed = MIN_SLOW_DOWN_SPEED
+		
+		if abs(velocity.x) < min_speed:
 			velocity.x = 0.0
 		else:
 			velocity.x = move_toward(velocity.x, 0.0, acceleration * delta)
 	
-	if abs(velocity.x) < MIN_SKID_SPEED:
+	if abs(velocity.x) < MIN_SLOW_DOWN_SPEED:
 		is_skiding = false
 	
 	speed_scale = abs(velocity.x) / MAX_SPEED
@@ -169,22 +176,18 @@ func animate(_delta: float):
 	
 	if is_falling:
 		sprite.stop()
+	elif is_crouching:
+		sprite.play("crouch")
 	elif is_jumping:
 		sprite.play("jump")
 	elif is_skiding:
 		sprite.play("skid")
-	elif direction or velocity.x:
+	elif input_axis.x or velocity.x:
 		sprite.play("walk")
 	else:
 		sprite.play("idle")
 
 func _on_hitbox_area_entered(area: Area2D):
-	if hitbox_just_collided:
-		# prevent handling multiple hits in the same frame
-		return
-
-	hitbox_just_collided = true
-
 	var body = area.get_parent()
 
 	if body.is_in_group("enemies"):

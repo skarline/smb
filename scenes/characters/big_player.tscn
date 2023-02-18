@@ -1,0 +1,113 @@
+[gd_scene load_steps=14 format=3 uid="uid://bvihqtewppy3f"]
+
+[ext_resource type="PackedScene" uid="uid://ospf0uke1btl" path="res://scenes/characters/player.tscn" id="1_pidl1"]
+[ext_resource type="Script" path="res://scenes/characters/big_player.gd" id="2_l3dpg"]
+[ext_resource type="Texture2D" uid="uid://bdu8qwbxsamiv" path="res://assets/sprites/mario_big.png" id="2_yrk32"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtda1"]
+atlas = ExtResource("2_yrk32")
+region = Rect2(102, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xudw5"]
+atlas = ExtResource("2_yrk32")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cv1f"]
+atlas = ExtResource("2_yrk32")
+region = Rect2(85, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs81o"]
+atlas = ExtResource("2_yrk32")
+region = Rect2(68, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3uj8x"]
+atlas = ExtResource("2_yrk32")
+region = Rect2(17, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4ost"]
+atlas = ExtResource("2_yrk32")
+region = Rect2(34, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqdj7"]
+atlas = ExtResource("2_yrk32")
+region = Rect2(51, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y6wwo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mtda1")
+}],
+"loop": true,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xudw5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cv1f")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cs81o")
+}],
+"loop": true,
+"name": &"skid",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3uj8x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4ost")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqdj7")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0f8nr"]
+size = Vector2(10, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8o258"]
+size = Vector2(10, 13)
+
+[node name="BigPlayer" instance=ExtResource("1_pidl1")]
+script = ExtResource("2_l3dpg")
+
+[node name="Sprite" parent="." index="0"]
+position = Vector2(0, -15)
+sprite_frames = SubResource("SpriteFrames_y6wwo")
+animation = &"idle"
+
+[node name="Shape" parent="Hitbox" index="0"]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_0f8nr")
+
+[node name="CrouchShape" type="CollisionShape2D" parent="Hitbox" index="1"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_8o258")
+disabled = true
+
+[node name="CollisionShape" parent="." index="2"]
+polygon = PackedVector2Array(-5, -1, -4, 0, 4, 0, 5, -1, 5, -1, 5, -14, 0, -27, -5, -14, -5, -1)
+
+[node name="CrouchCollisionShape" type="CollisionPolygon2D" parent="." index="3"]
+visible = false
+polygon = PackedVector2Array(-5, -1, -4, 0, 4, 0, 5, -1, 5, -5, 0, -13, -5, -5)
+disabled = true

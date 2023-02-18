@@ -1,7 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://ospf0uke1btl"]
+[gd_scene load_steps=12 format=3 uid="uid://ospf0uke1btl"]
 
 [ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_wgnfc"]
 [ext_resource type="Texture2D" uid="uid://cmwbahwwch8ro" path="res://assets/sprites/mario_small.png" id="2_gatvr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjmyc"]
+atlas = ExtResource("2_gatvr")
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r34y0"]
 atlas = ExtResource("2_gatvr")
@@ -29,6 +33,14 @@ region = Rect2(54, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hmvxf"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pjmyc")
+}],
+"loop": true,
+"name": &"crouch",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_r34y0")
@@ -82,7 +94,7 @@ texture_filter = 1
 texture_repeat = 1
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_hmvxf")
-animation = &"idle"
+animation = &"crouch"
 
 [node name="Hitbox" type="Area2D" parent="."]
 visible = false
