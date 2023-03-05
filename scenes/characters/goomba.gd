@@ -2,27 +2,24 @@ extends CharacterBody2D
 
 class_name Goomba
 
-var is_stomped = false
+var is_alive: bool = true
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var death_timer: Timer = $DeathTimer
 @onready var walk_behavior: WalkBehavior = $WalkBehavior
 
 func _ready():
-	sprite.play("default")
+	sprite.play("walk")
 
 func _physics_process(_delta):
-	if not is_stomped:
+	if is_alive:
 		move_and_slide()
 
-func stomp() -> bool:
-	if is_stomped:
-		return false
-	
+func stomp():
 	sprite.play("stomp")
 	death_timer.start()
 
-	is_stomped = true
+	is_alive = false
 	
 	return true
 

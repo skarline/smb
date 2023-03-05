@@ -1,11 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://ospf0uke1btl"]
+[gd_scene load_steps=28 format=3 uid="uid://ospf0uke1btl"]
 
-[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_wgnfc"]
+[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_a1ce6"]
 [ext_resource type="Texture2D" uid="uid://cmwbahwwch8ro" path="res://assets/sprites/mario_small.png" id="2_gatvr"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pjmyc"]
-atlas = ExtResource("2_gatvr")
-region = Rect2(0, 0, 16, 16)
+[ext_resource type="Texture2D" uid="uid://culctsxgkirf" path="res://assets/sprites/mario_growing.png" id="3_8a33l"]
+[ext_resource type="Texture2D" uid="uid://bdu8qwbxsamiv" path="res://assets/sprites/mario_big.png" id="3_wo87p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r34y0"]
 atlas = ExtResource("2_gatvr")
@@ -33,14 +31,6 @@ region = Rect2(54, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hmvxf"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pjmyc")
-}],
-"loop": true,
-"name": &"crouch",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_r34y0")
@@ -80,34 +70,230 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtda1"]
+atlas = ExtResource("3_wo87p")
+region = Rect2(102, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xudw5"]
+atlas = ExtResource("3_wo87p")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cv1f"]
+atlas = ExtResource("3_wo87p")
+region = Rect2(85, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs81o"]
+atlas = ExtResource("3_wo87p")
+region = Rect2(68, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3uj8x"]
+atlas = ExtResource("3_wo87p")
+region = Rect2(17, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4ost"]
+atlas = ExtResource("3_wo87p")
+region = Rect2(34, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqdj7"]
+atlas = ExtResource("3_wo87p")
+region = Rect2(51, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g84c2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mtda1")
+}],
+"loop": true,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xudw5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cv1f")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cs81o")
+}],
+"loop": true,
+"name": &"skid",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3uj8x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4ost")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqdj7")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0jpq"]
+atlas = ExtResource("3_8a33l")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayyvx"]
+atlas = ExtResource("3_8a33l")
+region = Rect2(18, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3vnx"]
+atlas = ExtResource("3_8a33l")
+region = Rect2(36, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_41hy2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0jpq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayyvx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3vnx")
+}],
+"loop": true,
+"name": &"to_big",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3vnx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayyvx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0jpq")
+}],
+"loop": true,
+"name": &"to_small",
+"speed": 5.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t120l"]
 size = Vector2(10, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2t48u"]
+size = Vector2(10, 27)
+
+[sub_resource type="Animation" id="Animation_6ungc"]
+resource_name = "transition"
+step = 0.066
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Transition:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.264, 0.33, 0.396, 0.462, 0.528, 0.594, 0.66, 0.726, 0.792),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 1, 0, 1, 2, 0, 1, 2, 0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.132, 0.858),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_on_transition_started"
+}, {
+"args": [],
+"method": &"_on_transition_finished"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hjf8o"]
+_data = {
+"transition": SubResource("Animation_6ungc")
+}
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 0
 floor_stop_on_slope = false
 floor_max_angle = 0.174533
-script = ExtResource("1_wgnfc")
+script = ExtResource("1_a1ce6")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="SpriteGroup" type="CanvasGroup" parent="."]
+
+[node name="Small" type="AnimatedSprite2D" parent="SpriteGroup"]
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_hmvxf")
-animation = &"crouch"
+animation = &"idle"
+
+[node name="Big" type="AnimatedSprite2D" parent="SpriteGroup"]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(0, -15)
+sprite_frames = SubResource("SpriteFrames_g84c2")
+animation = &"idle"
+
+[node name="Transition" type="AnimatedSprite2D" parent="SpriteGroup"]
+visible = false
+position = Vector2(0, -15)
+sprite_frames = SubResource("SpriteFrames_41hy2")
+animation = &"to_small"
 
 [node name="Hitbox" type="Area2D" parent="."]
-visible = false
 position = Vector2(0, -7)
 collision_layer = 2
 collision_mask = 6
 
-[node name="Shape" type="CollisionShape2D" parent="Hitbox"]
+[node name="Small" type="CollisionShape2D" parent="Hitbox"]
+visible = false
 shape = SubResource("RectangleShape2D_t120l")
 
-[node name="CollisionShape" type="CollisionPolygon2D" parent="."]
+[node name="Big" type="CollisionShape2D" parent="Hitbox"]
 visible = false
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_2t48u")
+disabled = true
+
+[node name="SmallCollisionShape" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(0, 1)
 polygon = PackedVector2Array(-5, -2, -4, -1, 4, -1, 5, -2, 5, -2, 0, -13, -5, -2)
+
+[node name="BigCollisionShape" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(-5, -1, -4, 0, 4, 0, 5, -1, 5, -1, 5, -14, 0, -27, -5, -14, -5, -1)
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../SpriteGroup/Small")
+libraries = {
+"": SubResource("AnimationLibrary_hjf8o")
+}
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

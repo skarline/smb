@@ -4,6 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://411uurvuibyl" path="res://assets/sprites/goomba.png" id="1_yukts"]
 [ext_resource type="PackedScene" uid="uid://cirx0ipaw2v4s" path="res://scenes/behaviors/walk_behavior.tscn" id="3_k3hjn"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ordj"]
+atlas = ExtResource("1_yukts")
+region = Rect2(34, 0, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_cwvxy"]
 atlas = ExtResource("1_yukts")
 region = Rect2(0, 0, 16, 16)
@@ -12,12 +16,16 @@ region = Rect2(0, 0, 16, 16)
 atlas = ExtResource("1_yukts")
 region = Rect2(17, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2ordj"]
-atlas = ExtResource("1_yukts")
-region = Rect2(34, 0, 16, 16)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_t5uig"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ordj")
+}],
+"loop": true,
+"name": &"stomp",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cwvxy")
@@ -26,15 +34,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_fs8li")
 }],
 "loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2ordj")
-}],
-"loop": true,
-"name": &"stomp",
+"name": &"walk",
 "speed": 5.0
 }]
 
@@ -49,7 +49,7 @@ script = ExtResource("1_kindd")
 position = Vector2(0, -7)
 rotation = -0.00495885
 sprite_frames = SubResource("SpriteFrames_t5uig")
-frame_progress = 0.659235
+animation = &"walk"
 speed_scale = 1.5
 
 [node name="Hitbox" type="Area2D" parent="."]

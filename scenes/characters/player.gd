@@ -2,13 +2,14 @@ extends CharacterBody2D
 
 class_name Player
 
+# Physics
+
 # Formulae to convert the original game's sub-sub-sub pixels per frame units to
 # pixels per second:
 
 # Speed: x * (15 / 1024)
 # Acceleration: x * (225 / 256)
 
-# Physics
 const MIN_SPEED = 4.453125
 const MAX_SPEED = 153.75
 const MAX_WALK_SPEED = 93.75
@@ -26,8 +27,7 @@ const JUMP_SPEED = [-240.0, -240.0, -300.0]
 const LONG_JUMP_GRAVITY = [450.0, 421.875, 562.5]
 const GRAVITY = [1575.0, 1350.0, 2025.0]
 
-const SPEED_THRESHOLD_1 = 60
-const SPEED_THRESHOLD_2 = 138.75
+const SPEED_THRESHOLDS = [60, 138.75]
 
 const STOMP_SPEED = 240.0
 const STOMP_SPEED_CAP = -60.0
@@ -39,9 +39,10 @@ var is_jumping = false
 var is_falling = false
 var is_skiding = false
 var is_crouching = false
-var is_big = false
 
-var input_axis: Vector2 = Vector2.ZERO
+var old_velocity = Vector2.ZERO
+
+var input_axis = Vector2.ZERO
 var speed_scale = 0.0
 
 var min_speed = MIN_SPEED	
@@ -50,26 +51,50 @@ var acceleration = WALK_ACCELERATION
 
 var speed_threshold: int = 0
 
-# Nodes
-@onready var sprite: AnimatedSprite2D = $Sprite
-@onready var hitbox: Area2D = $Hitbox
+enum States { STATE_SMALL, STATE_BIG, STATE_FIRE }
 
-func _process(delta):
-	animate(delta)
+var state = States.STATE_SMALL
+
+var collected_item_ref: Node = null
+
+# Nodes
+@onready var sprite = $SpriteGroup/Small
+
+@onready var small_sprite = $SpriteGroup/Small
+@onready var big_sprite = $SpriteGroup/Big
+@onready var transition_sprite = $SpriteGroup/Transition
+
+@onready var hitbox: Area2D = $Hitbox
+@onready var small_hitbox_shape: CollisionShape2D = $Hitbox/Small
+@onready var big_hitbox_shape: CollisionShape2D = $Hitbox/Big
+
+@onready var small_collision_shape: CollisionPolygon2D = $SmallCollisionShape
+@onready var big_collision_shape: CollisionPolygon2D = $BigCollisionShape
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+func _ready():
+	update_tree()
+
+func _process(_delta):
+	handle_input()
+	update_animation()
 
 func _physics_process(delta):
-	handle_input()
-	
 	handle_jump(delta)
 	handle_walk(delta)
+	
+	old_velocity = velocity
 
 	move_and_slide()
-	
-	handle_collision()
+
+	handle_last_collision()
 
 func handle_input():
 	input_axis.x = Input.get_axis("move_left", "move_right")
 	input_axis.y = Input.get_axis("move_up", "move_down")
+
+	var old_is_crouching = is_crouching
 	
 	if is_on_floor():
 		is_running = Input.is_action_pressed("run")
@@ -78,6 +103,9 @@ func handle_input():
 		if is_crouching and input_axis.x:
 			is_crouching = false
 			input_axis.x = 0.0
+	
+	if is_crouching != old_is_crouching:
+		update_tree()
 
 func handle_jump(delta: float):
 	if is_on_floor():
@@ -85,13 +113,13 @@ func handle_jump(delta: float):
 			is_jumping = true
 			
 			var speed = abs(velocity.x)
-			
-			if speed < SPEED_THRESHOLD_1:
-				speed_threshold = 0
-			elif speed < SPEED_THRESHOLD_2:
-				speed_threshold = 1
-			else:
-				speed_threshold = 2
+
+			speed_threshold = SPEED_THRESHOLDS.size()
+
+			for i in SPEED_THRESHOLDS.size():
+				if speed < SPEED_THRESHOLDS[i]:
+					speed_threshold = i
+					break
 			
 			velocity.y = JUMP_SPEED[speed_threshold]
 	else:
@@ -144,6 +172,8 @@ func handle_walk(delta: float):
 		
 		if input_axis.y:
 			min_speed = MIN_SLOW_DOWN_SPEED
+		else:
+			min_speed = MIN_SPEED
 		
 		if abs(velocity.x) < min_speed:
 			velocity.x = 0.0
@@ -155,28 +185,32 @@ func handle_walk(delta: float):
 	
 	speed_scale = abs(velocity.x) / MAX_SPEED
 
-func handle_collision():
+func handle_last_collision():
 	var collision = get_last_slide_collision()
 	
 	if not collision:
 		return
 	
-	var angle = round(collision.get_angle() * 180 / PI)
-	
+	var normal = collision.get_normal() * -1.0 # normal is relative to the player
+
+	# keep the y velocity when colliding with a corner
+	if normal != round(normal):
+		velocity.y = old_velocity.y
+
 	# head collision
-	if angle == 180:
+	if normal == Vector2.UP:
 		var collider = collision.get_collider()
 		
 		if collider.has_method("hit"):
 			collider.hit(self)
 
-func animate(_delta: float):
+func update_animation():
 	sprite.flip_h = is_facing_left
 	sprite.speed_scale = max(1.75, speed_scale * 5.0)
 	
 	if is_falling:
 		sprite.stop()
-	elif is_crouching:
+	elif is_crouching and state:
 		sprite.play("crouch")
 	elif is_jumping:
 		sprite.play("jump")
@@ -187,20 +221,84 @@ func animate(_delta: float):
 	else:
 		sprite.play("idle")
 
+func update_tree():
+	var is_small = not state
+	var is_crouching_or_small = is_crouching or is_small
+
+	sprite = small_sprite if is_small else big_sprite
+
+	small_sprite.visible = is_small	
+	big_sprite.visible = not is_small
+
+	big_collision_shape.disabled = is_crouching_or_small
+	big_hitbox_shape.disabled = is_crouching_or_small
+
+	small_collision_shape.disabled = not is_crouching_or_small
+	small_hitbox_shape.disabled = not is_crouching_or_small
+
+func transform(to_state: States):
+	Logger.append("Player transforming to state " + str(to_state))
+
+	Physics.disable()
+
+	match to_state:
+		States.STATE_SMALL:
+			transition_sprite.animation = "to_small"
+		States.STATE_BIG:
+			transition_sprite.animation = "to_big"
+	
+	transition_sprite.flip_h = sprite.flip_h
+
+	state = to_state
+	animation_player.play("transition")
+
+func _on_transition_started():
+	sprite.visible = false
+	transition_sprite.visible = true
+
+	if collected_item_ref:
+		collected_item_ref.queue_free()
+		collected_item_ref = null
+
+func _on_transition_finished():
+	var animation_name = sprite.animation
+
+	update_tree()
+	
+	if sprite.sprite_frames.has_animation(animation_name):
+		sprite.play(animation_name)
+	else:
+		sprite.play("idle")
+
+	sprite.visible = true
+	transition_sprite.visible = false
+
 func _on_hitbox_area_entered(area: Area2D):
 	var body = area.get_parent()
-
+	
 	if body.is_in_group("enemies"):
+		if not body.is_alive:
+			return
+
 		var stomp = velocity.y > 0 and hitbox.global_position.y < area.global_position.y
 
 		if stomp:
-			if body.has_method("stomp") and body.stomp():
+			if body.has_method("stomp"):
+				body.stomp()
 				velocity.y = fmod(velocity.y, STOMP_SPEED_CAP) - STOMP_SPEED
 		else:
-			# TODO: take hit
-			pass
+			if state == States.STATE_SMALL:
+				# TODO: handle death
+				pass
+			else:
+				transform(state - 1)
 
-func _on_hitbox_body_entered(body: Node2D):
+func _on_hitbox_body_entered(body: Node):
 	if body.is_in_group("items"):
-		body.queue_free()
-		# TODO: handle
+		collected_item_ref = body
+		
+		if body is RedMushroom:
+			transform(States.STATE_BIG)
+
+func _on_animation_player_animation_finished(_anim_name):
+	Physics.enable()
