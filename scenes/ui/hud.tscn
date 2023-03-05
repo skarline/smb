@@ -1,12 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2w3rwm0nwfxv"]
+[gd_scene load_steps=11 format=3 uid="uid://c2w3rwm0nwfxv"]
 
 [ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1_n114d"]
 [ext_resource type="FontFile" uid="uid://bkukv2ir5407k" path="res://assets/fonts/smb.ttf" id="1_qyf17"]
 [ext_resource type="Texture2D" uid="uid://dcooykk800xv0" path="res://assets/sprites/hud_coins.png" id="3_bnmj5"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1gb50"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_667jh"]
+bg_color = Color(0, 0, 0, 0.25098)
+
 [sub_resource type="Theme" id="Theme_rn8m4"]
 default_font = ExtResource("1_qyf17")
 default_font_size = 8
+LineEdit/styles/focus = SubResource("StyleBoxFlat_1gb50")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_667jh")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bxj6l"]
 atlas = ExtResource("3_bnmj5")
@@ -92,3 +100,23 @@ custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 text = "  Time
  "
+
+[node name="Console" type="VBoxContainer" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Output" type="RichTextLabel" parent="Control/Console"]
+layout_mode = 2
+size_flags_vertical = 8
+fit_content = true
+scroll_active = false
+
+[node name="Input" type="LineEdit" parent="Control/Console"]
+visible = false
+layout_mode = 2
