@@ -54,15 +54,17 @@ var speed_threshold: int = 0
 enum States { STATE_SMALL, STATE_BIG, STATE_FIRE }
 
 var state = States.STATE_SMALL
+var has_cooldown = false
 
 var collected_item_ref: Node = null
 
 # Nodes
 @onready var sprite = $SpriteGroup/Small
 
-@onready var small_sprite = $SpriteGroup/Small
-@onready var big_sprite = $SpriteGroup/Big
-@onready var transition_sprite = $SpriteGroup/Transition
+@onready var sprite_group: CanvasGroup = $SpriteGroup
+@onready var small_sprite: AnimatedSprite2D = $SpriteGroup/Small
+@onready var big_sprite: AnimatedSprite2D = $SpriteGroup/Big
+@onready var transition_sprite: AnimatedSprite2D = $SpriteGroup/Transition
 
 @onready var hitbox: Area2D = $Hitbox
 @onready var small_hitbox_shape: CollisionShape2D = $Hitbox/Small
@@ -72,6 +74,7 @@ var collected_item_ref: Node = null
 @onready var big_collision_shape: CollisionPolygon2D = $BigCollisionShape
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var cooldown_timer: Timer = $CooldownTimer
 
 func _ready():
 	update_tree()
@@ -239,18 +242,31 @@ func update_tree():
 func transform(to_state: States):
 	Logger.append("Player transforming to state " + str(to_state))
 
+	state = to_state
+	
+	match state:
+		States.STATE_SMALL:
+			transition_sprite.animation = "shrink"
+		States.STATE_BIG:
+			transition_sprite.animation = "grow"
+		
+	transition_sprite.flip_h = sprite.flip_h	
+	animation_player.play("transition")
+
 	Physics.disable()
 
-	match to_state:
-		States.STATE_SMALL:
-			transition_sprite.animation = "to_small"
-		States.STATE_BIG:
-			transition_sprite.animation = "to_big"
-	
-	transition_sprite.flip_h = sprite.flip_h
+func take_hit():
+	if state == States.STATE_SMALL:
+		# TODO: handle death
+		pass
+	else:
+		transform(state - 1)
+		toggle_cooldown(true)
+		cooldown_timer.start()
 
-	state = to_state
-	animation_player.play("transition")
+func toggle_cooldown(value: bool):
+	has_cooldown = value
+	sprite_group.material.set_shader_parameter("has_cooldown", value)
 
 func _on_transition_started():
 	sprite.visible = false
@@ -286,12 +302,8 @@ func _on_hitbox_area_entered(area: Area2D):
 			if body.has_method("stomp"):
 				body.stomp()
 				velocity.y = fmod(velocity.y, STOMP_SPEED_CAP) - STOMP_SPEED
-		else:
-			if state == States.STATE_SMALL:
-				# TODO: handle death
-				pass
-			else:
-				transform(state - 1)
+		elif not has_cooldown:
+			take_hit()
 
 func _on_hitbox_body_entered(body: Node):
 	if body.is_in_group("items"):
@@ -302,3 +314,6 @@ func _on_hitbox_body_entered(body: Node):
 
 func _on_animation_player_animation_finished(_anim_name):
 	Physics.enable()
+
+func _on_cooldown_timer_timeout():
+	toggle_cooldown(false)

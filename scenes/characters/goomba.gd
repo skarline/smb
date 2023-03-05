@@ -23,7 +23,12 @@ func stomp():
 	
 	return true
 
-func _on_hitbox_area_entered(_area: Area2D):
+func _on_hitbox_area_entered(area: Area2D):
+	var body = area.get_parent()
+
+	if body is Player and body.has_cooldown:
+		return
+
 	walk_behavior.change_direction()
 
 func _on_death_timer_timeout():

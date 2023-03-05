@@ -15,5 +15,8 @@ func _input(event):
 		console.visible = not console.visible
 
 func _on_message_logged(message: String):
+	if console_out_buffer.size() > 24:
+		console_out_buffer.remove_at(0)
+
 	console_out_buffer.append(message)
 	console_out.text = "\n".join(console_out_buffer)

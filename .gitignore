@@ -13,4 +13,8 @@ export_presets.cfg
 *.DS_Store
 Thumbs.db
 
+# Exports
+export/
+
+# TODOs
 todo.md

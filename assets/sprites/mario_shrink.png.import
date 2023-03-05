@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://culctsxgkirf"
-path="res://.godot/imported/mario_growing.png-0b8bde793d48f4fdb9b6276876afceb3.ctex"
+uid="uid://dk2kaoiuhbxjt"
+path="res://.godot/imported/mario_shrink.png-19d4d19f4898dd5db0ebb6b9a43dcd55.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/mario_growing.png"
-dest_files=["res://.godot/imported/mario_growing.png-0b8bde793d48f4fdb9b6276876afceb3.ctex"]
+source_file="res://assets/sprites/mario_shrink.png"
+dest_files=["res://.godot/imported/mario_shrink.png-19d4d19f4898dd5db0ebb6b9a43dcd55.ctex"]
 
 [params]
 

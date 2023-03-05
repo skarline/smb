@@ -6,6 +6,9 @@ const JUMP_SPEED = -240.0
 
 @onready var _level = $"../Main/Level"
 
+func _process(_delta):
+	Engine.physics_ticks_per_second = round(DisplayServer.screen_get_refresh_rate())
+
 func disable():
 	Logger.append("Disabling physics")
 	_toggle_children_physics(_level, false)

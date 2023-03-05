@@ -21,11 +21,10 @@ func handle_collision():
 	var collision = parent.get_last_slide_collision()
 
 	if collision:
-		var angle = round(collision.get_angle() * 180 / PI)
-		
-		# wall collision
-		if angle == 90:
-			change_direction()
+		var normal = collision.get_normal()
+
+		if normal.x:
+			is_facing_left = normal.x < 0
 
 func change_direction():
 	is_facing_left = not is_facing_left
