@@ -10,12 +10,12 @@ func _process(_delta):
 	Engine.physics_ticks_per_second = round(DisplayServer.screen_get_refresh_rate())
 
 func disable():
-	Logger.append("Disabling physics")
 	_toggle_children_physics(_level, false)
+	Logger.append("Physics disabled")
 
 func enable():
-	Logger.append("Enabling physics")
 	_toggle_children_physics(_level, true)
+	Logger.append("Physics enabled")
 
 func _toggle_children_physics(node: Node, value: bool):	
 	for child in node.get_children():	

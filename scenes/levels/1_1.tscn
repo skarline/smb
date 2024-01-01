@@ -1,6 +1,5 @@
-[gd_scene load_steps=16 format=3 uid="uid://byfj8qhvpjcw"]
+[gd_scene load_steps=15 format=3 uid="uid://byfj8qhvpjcw"]
 
-[ext_resource type="Texture2D" uid="uid://xemkpvaotb40" path="res://scenes/levels/SuperMarioBrosMap1-1.png" id="1_7dr0b"]
 [ext_resource type="PackedScene" uid="uid://df00q74jhgta4" path="res://scenes/blocks/question_block.tscn" id="1_o10pm"]
 [ext_resource type="Texture2D" uid="uid://cbw3nxgte4ibj" path="res://assets/tilesets/overworld.png" id="2_riuat"]
 [ext_resource type="PackedScene" uid="uid://dyedtrdyumqly" path="res://scenes/characters/goomba.tscn" id="4_38siv"]
@@ -265,12 +264,6 @@ pattern_3 = SubResource("TileMapPattern_638jd")
 pattern_4 = SubResource("TileMapPattern_fute3")
 
 [node name="Level" type="Node2D"]
-
-[node name="SuperMarioBrosMap1-1" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(1, 1, 1, 0.266667)
-position = Vector2(1792, 240)
-texture = ExtResource("1_7dr0b")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_dbgtc")
