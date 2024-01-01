@@ -32,7 +32,7 @@ func hit(_body: Node):
 	for entity in entity_detection_area.get_overlapping_bodies():
 		if entity.has_method("hit"):
 			entity.hit(self)
-
+	
 func set_empty():
 	_is_empty = true
 	sprite.play("empty")

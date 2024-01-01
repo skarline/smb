@@ -1,15 +1,10 @@
-[gd_scene load_steps=34 format=3 uid="uid://cbbuditkrn656"]
+[gd_scene load_steps=32 format=3 uid="uid://cbbuditkrn656"]
 
 [ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_a1ce6"]
 [ext_resource type="Texture2D" uid="uid://cmwbahwwch8ro" path="res://assets/sprites/mario_small.png" id="2_gatvr"]
-[ext_resource type="Shader" path="res://scenes/characters/player.gdshader" id="2_oylxp"]
 [ext_resource type="Texture2D" uid="uid://bdu8qwbxsamiv" path="res://assets/sprites/mario_big.png" id="3_wo87p"]
 [ext_resource type="Texture2D" uid="uid://culctsxgkirf" path="res://assets/sprites/mario_grow.png" id="4_f3wyq"]
 [ext_resource type="Texture2D" uid="uid://dk2kaoiuhbxjt" path="res://assets/sprites/mario_shrink.png" id="5_oyv1a"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e1g0c"]
-shader = ExtResource("2_oylxp")
-shader_parameter/has_cooldown = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r34y0"]
 atlas = ExtResource("2_gatvr")
@@ -220,7 +215,7 @@ step = 0.066
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Transition:frame")
+tracks/0/path = NodePath("../TransitionSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -232,7 +227,7 @@ tracks/0/keys = {
 tracks/1/type = "method"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../..")
+tracks/1/path = NodePath("..")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -258,17 +253,14 @@ floor_stop_on_slope = false
 floor_max_angle = 0.174533
 script = ExtResource("1_a1ce6")
 
-[node name="SpriteGroup" type="CanvasGroup" parent="."]
-material = SubResource("ShaderMaterial_e1g0c")
-
-[node name="Small" type="AnimatedSprite2D" parent="SpriteGroup"]
+[node name="SmallSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_hmvxf")
 animation = &"idle"
 
-[node name="Big" type="AnimatedSprite2D" parent="SpriteGroup"]
+[node name="BigSprite" type="AnimatedSprite2D" parent="."]
 visible = false
 texture_filter = 1
 texture_repeat = 1
@@ -276,11 +268,21 @@ position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_g84c2")
 animation = &"idle"
 
-[node name="Transition" type="AnimatedSprite2D" parent="SpriteGroup"]
+[node name="TransitionSprite" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_41hy2")
 animation = &"grow"
+
+[node name="SmallCollisionShape" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-5, -2, -4, -1, 4, -1, 5, -2, 5, -2, 0, -13, -5, -2)
+
+[node name="BigCollisionShape" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(-5, -1, -4, 0, 4, 0, 5, -1, 5, -1, 5, -14, 0, -27, -5, -14, -5, -1)
+disabled = true
 
 [node name="Hitbox" type="Area2D" parent="."]
 visible = false
@@ -296,18 +298,8 @@ position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_2t48u")
 disabled = true
 
-[node name="SmallCollisionShape" type="CollisionPolygon2D" parent="."]
-visible = false
-position = Vector2(0, 1)
-polygon = PackedVector2Array(-5, -2, -4, -1, 4, -1, 5, -2, 5, -2, 0, -13, -5, -2)
-
-[node name="BigCollisionShape" type="CollisionPolygon2D" parent="."]
-visible = false
-polygon = PackedVector2Array(-5, -1, -4, 0, 4, 0, 5, -1, 5, -1, 5, -14, 0, -27, -5, -14, -5, -1)
-disabled = true
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../SpriteGroup/Small")
+root_node = NodePath("../SmallSprite")
 libraries = {
 "": SubResource("AnimationLibrary_hjf8o")
 }

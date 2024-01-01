@@ -51,20 +51,34 @@ var acceleration = WALK_ACCELERATION
 
 var speed_threshold: int = 0
 
-enum States { STATE_SMALL, STATE_BIG, STATE_FIRE }
+enum State { SMALL, BIG, FIRE }
 
-var state = States.STATE_SMALL
+var state = State.SMALL:
+	set(value):
+		if state != value:
+			state = value
+			
+			match state:
+				State.SMALL:
+					transition_sprite.animation = "shrink"
+				State.BIG:
+					transition_sprite.animation = "grow"
+			
+			transition_sprite.flip_h = sprite.flip_h
+			animation_player.play("transition")
+			
+			Physics.disable()
+
 var has_cooldown = false
 
 var collected_item_ref: Node = null
 
 # Nodes
-@onready var sprite = $SpriteGroup/Small
+@onready var sprite = $SmallSprite
 
-@onready var sprite_group: CanvasGroup = $SpriteGroup
-@onready var small_sprite: AnimatedSprite2D = $SpriteGroup/Small
-@onready var big_sprite: AnimatedSprite2D = $SpriteGroup/Big
-@onready var transition_sprite: AnimatedSprite2D = $SpriteGroup/Transition
+@onready var small_sprite: AnimatedSprite2D = $SmallSprite
+@onready var big_sprite: AnimatedSprite2D = $BigSprite
+@onready var transition_sprite: AnimatedSprite2D = $TransitionSprite
 
 @onready var hitbox: Area2D = $Hitbox
 @onready var small_hitbox_shape: CollisionShape2D = $Hitbox/Small
@@ -77,7 +91,7 @@ var collected_item_ref: Node = null
 @onready var cooldown_timer: Timer = $CooldownTimer
 
 func _ready():
-	update_tree()
+	_update_tree()
 
 func _process(_delta):
 	handle_input()
@@ -108,7 +122,7 @@ func handle_input():
 			input_axis.x = 0.0
 	
 	if is_crouching != old_is_crouching:
-		update_tree()
+		_update_tree()
 
 func handle_jump(delta: float):
 	if is_on_floor():
@@ -224,7 +238,7 @@ func update_animation():
 	else:
 		sprite.play("idle")
 
-func update_tree():
+func _update_tree():
 	var is_small = not state
 	var is_crouching_or_small = is_crouching or is_small
 
@@ -239,24 +253,12 @@ func update_tree():
 	small_collision_shape.disabled = not is_crouching_or_small
 	small_hitbox_shape.disabled = not is_crouching_or_small
 
-func transform(to_state: States):
-	Logger.append("Player transforming to state " + str(to_state))
-
+func transform(to_state: State):
 	state = to_state
 	
-	match state:
-		States.STATE_SMALL:
-			transition_sprite.animation = "shrink"
-		States.STATE_BIG:
-			transition_sprite.animation = "grow"
-		
-	transition_sprite.flip_h = sprite.flip_h	
-	animation_player.play("transition")
-
-	Physics.disable()
 
 func take_hit():
-	if state == States.STATE_SMALL:
+	if state == State.SMALL:
 		# TODO: handle death
 		pass
 	else:
@@ -266,7 +268,9 @@ func take_hit():
 
 func toggle_cooldown(value: bool):
 	has_cooldown = value
-	sprite_group.material.set_shader_parameter("has_cooldown", value)
+
+	# update the sprite's alpha
+	modulate.a = 0.5 if value else 1.0
 
 func _on_transition_started():
 	sprite.visible = false
@@ -279,14 +283,13 @@ func _on_transition_started():
 func _on_transition_finished():
 	var animation_name = sprite.animation
 
-	update_tree()
+	_update_tree()
 	
 	if sprite.sprite_frames.has_animation(animation_name):
 		sprite.play(animation_name)
 	else:
 		sprite.play("idle")
 
-	sprite.visible = true
 	transition_sprite.visible = false
 
 func _on_hitbox_area_entered(area: Area2D):
@@ -310,7 +313,7 @@ func _on_hitbox_body_entered(body: Node):
 		collected_item_ref = body
 		
 		if body is RedMushroom:
-			transform(States.STATE_BIG)
+			transform(State.BIG)
 
 func _on_animation_player_animation_finished(_anim_name):
 	Physics.enable()
