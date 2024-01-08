@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://df00q74jhgta4"]
+[gd_scene load_steps=11 format=3 uid="uid://df00q74jhgta4"]
 
-[ext_resource type="PackedScene" uid="uid://c3i6uxhhpqacq" path="res://scenes/blocks/block.tscn" id="1_ul3gt"]
 [ext_resource type="Texture2D" uid="uid://cpwjveku4gyqg" path="res://assets/sprites/question_block.png" id="2_40ef5"]
 [ext_resource type="Script" path="res://scenes/blocks/question_block.gd" id="2_jpxdx"]
 [ext_resource type="Texture2D" uid="uid://swkwgu4mnlcq" path="res://assets/sprites/empty_block.png" id="4_2tx5i"]
@@ -52,9 +51,34 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="QuestionBlock" instance=ExtResource("1_ul3gt")]
-script = ExtResource("2_jpxdx")
-is_invisible = false
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4bs6b"]
+size = Vector2(16, 16)
 
-[node name="Sprite" parent="." index="1"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3o3j"]
+size = Vector2(8, 4)
+
+[node name="QuestionBlock" type="StaticBody2D"]
+script = ExtResource("2_jpxdx")
+item = 1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_f1mhg")
+autoplay = "default"
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_4bs6b")
+
+[node name="HitArea" type="Area2D" parent="."]
+visible = false
+position = Vector2(8, 0)
+collision_layer = 0
+collision_mask = 6
+
+[node name="Shape" type="CollisionShape2D" parent="HitArea"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_m3o3j")
+
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]

@@ -309,7 +309,7 @@ func _on_hitbox_area_entered(area: Area2D):
 			take_hit()
 
 func _on_hitbox_body_entered(body: Node):
-	if body.is_in_group("items"):
+	if body.is_in_group("powerups"):
 		collected_item_ref = body
 		
 		if body is RedMushroom:

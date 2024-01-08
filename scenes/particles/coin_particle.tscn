@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://33vflrs2k423"]
 
-[ext_resource type="Script" path="res://scenes/particles/coin_particle.gd" id="1_eoh4k"]
+[ext_resource type="Script" path="res://scenes/particles/particle.gd" id="1_bm4li"]
 [ext_resource type="Texture2D" uid="uid://cfrv0jhs583dq" path="res://assets/sprites/coin_particle.png" id="1_i874j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qh112"]
@@ -36,22 +36,18 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 30.0
 }]
 
 [node name="CoinParticle" type="Node2D"]
-script = ExtResource("1_eoh4k")
+script = ExtResource("1_bm4li")
+lifespan_seconds = 0.5
+velocity = Vector2(2.08165e-12, -360)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_sed63")
-frame_progress = 0.636741
+autoplay = "default"
+frame_progress = 0.594274
 speed_scale = 2.0
 offset = Vector2(2.08165e-12, -16)
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
-one_shot = true
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://bvlddobs76gad"]
+
+[ext_resource type="Script" path="res://scenes/particles/brick_block_debris.gd" id="1_3qylh"]
+[ext_resource type="Texture2D" uid="uid://cltljslw45vf" path="res://assets/sprites/block_debris.png" id="2_ujonp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqmij"]
+atlas = ExtResource("2_ujonp")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntux2"]
+atlas = ExtResource("2_ujonp")
+region = Rect2(9, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnwp3"]
+atlas = ExtResource("2_ujonp")
+region = Rect2(18, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_me2f5"]
+atlas = ExtResource("2_ujonp")
+region = Rect2(27, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jleii"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqmij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntux2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fnwp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_me2f5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="BrickBlockDebris" type="Node2D"]
+script = ExtResource("1_3qylh")
+
+[node name="TopLeft" type="AnimatedSprite2D" parent="."]
+z_index = 10
+position = Vector2(-4, -4)
+sprite_frames = SubResource("SpriteFrames_jleii")
+autoplay = "default"
+frame_progress = 0.903811
+
+[node name="TopRight" type="AnimatedSprite2D" parent="."]
+z_index = 10
+position = Vector2(4, -4)
+sprite_frames = SubResource("SpriteFrames_jleii")
+autoplay = "default"
+
+[node name="BottomLeft" type="AnimatedSprite2D" parent="."]
+z_index = 10
+position = Vector2(-4, 4)
+sprite_frames = SubResource("SpriteFrames_jleii")
+autoplay = "default"
+
+[node name="BottomRight" type="AnimatedSprite2D" parent="."]
+z_index = 10
+position = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_jleii")
+autoplay = "default"

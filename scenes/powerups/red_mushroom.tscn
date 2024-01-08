@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://poh78m2ylh4o"]
+
+[ext_resource type="Script" path="res://scenes/powerups/red_mushroom.gd" id="1_ujj8u"]
+[ext_resource type="Texture2D" uid="uid://tcjjmv4nuavj" path="res://assets/sprites/red_mushroom.png" id="2_xvlut"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32inq"]
+size = Vector2(16, 14)
+
+[node name="RedMushroom" type="CharacterBody2D" groups=["powerups"]]
+collision_layer = 4
+script = ExtResource("1_ujj8u")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+z_index = 5
+position = Vector2(8, -8)
+texture = ExtResource("2_xvlut")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(8, -8)
+shape = SubResource("RectangleShape2D_32inq")

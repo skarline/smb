@@ -1,9 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7cjtxj3eoflq"]
+[gd_scene load_steps=8 format=3 uid="uid://c30a23epjbrps"]
 
-[ext_resource type="PackedScene" uid="uid://c3i6uxhhpqacq" path="res://scenes/blocks/block.tscn" id="1_j4oyx"]
-[ext_resource type="Script" path="res://scenes/blocks/brick_block.gd" id="2_78fv1"]
+[ext_resource type="PackedScene" uid="uid://df00q74jhgta4" path="res://scenes/blocks/question_block.tscn" id="1_so4en"]
+[ext_resource type="Texture2D" uid="uid://cbw3nxgte4ibj" path="res://assets/tilesets/overworld.png" id="2_7klea"]
+[ext_resource type="Script" path="res://scenes/blocks/brick_block.gd" id="2_ebyhf"]
+[ext_resource type="Texture2D" uid="uid://swkwgu4mnlcq" path="res://assets/sprites/empty_block.png" id="3_3brrq"]
 
-[node name="BrickBlock" instance=ExtResource("1_j4oyx")]
-script = ExtResource("2_78fv1")
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcw05"]
+atlas = ExtResource("2_7klea")
+region = Rect2(16, 0, 16, 16)
 
-[node name="MultiCoinTimer" type="Timer" parent="." index="5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4lmm"]
+atlas = ExtResource("3_3brrq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ept1d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcw05")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4lmm")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}]
+
+[node name="BrickBlock" instance=ExtResource("1_so4en")]
+script = ExtResource("2_ebyhf")
+item = 0
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_ept1d")

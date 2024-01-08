@@ -1,9 +1,25 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cecbimox7mcnv"]
+[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://cecbimox7mcnv"]
 
-[ext_resource type="Texture2D" uid="uid://cbw3nxgte4ibj" path="res://assets/tiles/overworld.png" id="1_tcid1"]
+[ext_resource type="Texture2D" uid="uid://cbw3nxgte4ibj" path="res://assets/tilesets/overworld.png" id="1_u6x88"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_gxp4n"]
+tile_data = PackedInt32Array(0, 524288, 2, 65536, 524288, 3, 1, 589824, 2, 65537, 589824, 3, 2, 655360, 2, 65538, 655360, 3)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_dxk50"]
+tile_data = PackedInt32Array(0, 524288, 2, 65536, 524288, 3, 1, 589824, 2, 65537, 589824, 3, 2, 589824, 2, 65538, 589824, 3, 3, 655360, 2, 65539, 655360, 3)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_hreno"]
+tile_data = PackedInt32Array(0, 524288, 2, 65536, 524288, 3, 1, 589824, 2, 65537, 589824, 3, 2, 589824, 2, 65538, 589824, 3, 3, 589824, 2, 65539, 589824, 3, 4, 655360, 2, 65540, 655360, 3)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_638jd"]
+tile_data = PackedInt32Array(131072, 0, 7, 65537, 0, 7, 131073, 65536, 7, 2, 131072, 6, 65538, 65536, 7, 131074, 131072, 7, 65539, 262144, 7, 131075, 196608, 7, 131076, 262144, 7)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_fute3"]
+tile_data = PackedInt32Array(65536, 0, 7, 1, 131072, 6, 65537, 65536, 7, 65538, 262144, 7)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6qpgm"]
-texture = ExtResource("1_tcid1")
+resource_name = "World"
+texture = ExtResource("1_u6x88")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -216,18 +232,18 @@ texture = ExtResource("1_tcid1")
 8:2/0 = 0
 8:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 8:2/0/physics_layer_0/angular_velocity = 0.0
-9:2/0 = 0
-9:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-9:2/0/physics_layer_0/angular_velocity = 0.0
-10:2/0 = 0
-10:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-10:2/0/physics_layer_0/angular_velocity = 0.0
 8:3/0 = 0
 8:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 8:3/0/physics_layer_0/angular_velocity = 0.0
+9:2/0 = 0
+9:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:2/0/physics_layer_0/angular_velocity = 0.0
 9:3/0 = 0
 9:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 9:3/0/physics_layer_0/angular_velocity = 0.0
+10:2/0 = 0
+10:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:2/0/physics_layer_0/angular_velocity = 0.0
 10:3/0 = 0
 10:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 10:3/0/physics_layer_0/angular_velocity = 0.0
@@ -235,3 +251,8 @@ texture = ExtResource("1_tcid1")
 [resource]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_6qpgm")
+pattern_0 = SubResource("TileMapPattern_gxp4n")
+pattern_1 = SubResource("TileMapPattern_dxk50")
+pattern_2 = SubResource("TileMapPattern_hreno")
+pattern_3 = SubResource("TileMapPattern_638jd")
+pattern_4 = SubResource("TileMapPattern_fute3")

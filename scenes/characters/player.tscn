@@ -254,6 +254,7 @@ floor_max_angle = 0.174533
 script = ExtResource("1_a1ce6")
 
 [node name="SmallSprite" type="AnimatedSprite2D" parent="."]
+z_index = 5
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(0, -7)
@@ -262,6 +263,7 @@ animation = &"idle"
 
 [node name="BigSprite" type="AnimatedSprite2D" parent="."]
 visible = false
+z_index = 5
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(0, -15)
@@ -270,6 +272,7 @@ animation = &"idle"
 
 [node name="TransitionSprite" type="AnimatedSprite2D" parent="."]
 visible = false
+z_index = 5
 position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_41hy2")
 animation = &"grow"
