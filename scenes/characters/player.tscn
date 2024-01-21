@@ -257,7 +257,7 @@ script = ExtResource("1_a1ce6")
 z_index = 5
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(0, -7)
+position = Vector2(0, 1.1)
 sprite_frames = SubResource("SpriteFrames_hmvxf")
 animation = &"idle"
 
@@ -266,30 +266,31 @@ visible = false
 z_index = 5
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(0, -15)
+position = Vector2(0, -6.9)
 sprite_frames = SubResource("SpriteFrames_g84c2")
 animation = &"idle"
 
 [node name="TransitionSprite" type="AnimatedSprite2D" parent="."]
 visible = false
 z_index = 5
-position = Vector2(0, -15)
+position = Vector2(0, -6.9)
 sprite_frames = SubResource("SpriteFrames_41hy2")
 animation = &"grow"
 
 [node name="SmallCollisionShape" type="CollisionPolygon2D" parent="."]
 visible = false
-position = Vector2(0, 1)
+position = Vector2(0, 9.1)
 polygon = PackedVector2Array(-5, -2, -4, -1, 4, -1, 5, -2, 5, -2, 0, -13, -5, -2)
 
 [node name="BigCollisionShape" type="CollisionPolygon2D" parent="."]
 visible = false
+position = Vector2(0, 8.1)
 polygon = PackedVector2Array(-5, -1, -4, 0, 4, 0, 5, -1, 5, -1, 5, -14, 0, -27, -5, -14, -5, -1)
 disabled = true
 
 [node name="Hitbox" type="Area2D" parent="."]
 visible = false
-position = Vector2(0, -7)
+position = Vector2(0, 1.1)
 collision_layer = 2
 collision_mask = 6
 

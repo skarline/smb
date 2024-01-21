@@ -12,9 +12,8 @@ script = ExtResource("1_ujj8u")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 z_index = 5
-position = Vector2(8, -8)
 texture = ExtResource("2_xvlut")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(8, -8)
+visible = false
 shape = SubResource("RectangleShape2D_32inq")

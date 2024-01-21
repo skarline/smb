@@ -20,7 +20,6 @@ func on_hit(body: Node):
 
 func spawn_debris():
 	var debris = debris_scene.instantiate()
-	var origin = position + Vector2(8, 8)
-	debris.position = origin
+	debris.position = position
 	debris.velocity.y = DEBRIS_VERTICAL_VELOCITY
 	add_sibling(debris)

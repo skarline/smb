@@ -45,7 +45,7 @@ lifespan_seconds = 0.5
 velocity = Vector2(2.08165e-12, -360)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(8, 8)
+position = Vector2(0, 16)
 sprite_frames = SubResource("SpriteFrames_sed63")
 autoplay = "default"
 frame_progress = 0.594274

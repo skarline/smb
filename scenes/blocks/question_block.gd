@@ -64,9 +64,9 @@ func on_hit(body: Node):
 		_is_empty = true
 		sprite.play("empty")
 
+		_item_instance.position = position + Vector2.UP * 16
 		if "spawner" in _item_instance:
 			_item_instance.spawner = self
-		_item_instance.position = position
 
 		add_sibling(_item_instance)
 		_item_instance = null

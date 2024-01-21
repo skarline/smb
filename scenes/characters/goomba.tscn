@@ -46,7 +46,7 @@ collision_layer = 0
 script = ExtResource("1_kindd")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -7)
+position = Vector2(9.14883e-10, 1)
 rotation = -0.00495885
 sprite_frames = SubResource("SpriteFrames_t5uig")
 animation = &"walk"
@@ -54,6 +54,7 @@ speed_scale = 1.5
 
 [node name="Hitbox" type="Area2D" parent="."]
 visible = false
+position = Vector2(0, 8)
 collision_layer = 2
 collision_mask = 2
 
@@ -63,6 +64,7 @@ shape = SubResource("RectangleShape2D_6j6xw")
 
 [node name="CollisionShape" type="CollisionPolygon2D" parent="."]
 visible = false
+position = Vector2(0, 8)
 polygon = PackedVector2Array(-5, -12, -7, -10, -7, -5, -2, 0, 2, 0, 7, -5, 7, -10, 5, -12)
 
 [node name="DeathTimer" type="Timer" parent="."]
@@ -72,7 +74,7 @@ one_shot = true
 is_facing_left = true
 
 [node name="VisibilityEnabler" type="VisibleOnScreenEnabler2D" parent="."]
-position = Vector2(0, -7)
+position = Vector2(0, 1)
 scale = Vector2(0.8, 0.8)
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
