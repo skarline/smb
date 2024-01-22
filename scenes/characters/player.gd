@@ -32,6 +32,9 @@ const SPEED_THRESHOLDS = [60, 138.75]
 const STOMP_SPEED = 240.0
 const STOMP_SPEED_CAP = -60.0
 
+# Nodes
+@onready var camera = get_node_or_null("Camera")
+
 # Input
 var is_facing_left = false
 var is_running = false
@@ -40,7 +43,7 @@ var is_falling = false
 var is_skiding = false
 var is_crouching = false
 
-var old_velocity = Vector2.ZERO
+var _old_velocity = Vector2.ZERO
 
 var input_axis = Vector2.ZERO
 var speed_scale = 0.0
@@ -94,24 +97,24 @@ func _ready():
 	_update_tree()
 
 func _process(_delta):
-	handle_input()
-	update_animation()
+	process_input()
+	process_animation()
 
 func _physics_process(delta):
-	handle_jump(delta)
-	handle_walk(delta)
+	process_jump(delta)
+	process_walk(delta)
+	process_bounds_collision()
 	
-	old_velocity = velocity
+	_old_velocity = velocity
 
 	move_and_slide()
-
 	handle_last_collision()
 
-func handle_input():
+func process_input():
 	input_axis.x = Input.get_axis("move_left", "move_right")
 	input_axis.y = Input.get_axis("move_up", "move_down")
 
-	var old_is_crouching = is_crouching
+	var was_crouching = is_crouching
 	
 	if is_on_floor():
 		is_running = Input.is_action_pressed("run")
@@ -121,10 +124,10 @@ func handle_input():
 			is_crouching = false
 			input_axis.x = 0.0
 	
-	if is_crouching != old_is_crouching:
+	if is_crouching != was_crouching:
 		_update_tree()
 
-func handle_jump(delta: float):
+func process_jump(delta: float):
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump"):
 			is_jumping = true
@@ -156,7 +159,7 @@ func handle_jump(delta: float):
 	elif is_on_floor():
 		is_falling = false
 
-func handle_walk(delta: float):
+func process_walk(delta: float):
 	if input_axis.x:
 		if is_on_floor():
 			if velocity.x:
@@ -202,6 +205,23 @@ func handle_walk(delta: float):
 	
 	speed_scale = abs(velocity.x) / MAX_SPEED
 
+func process_bounds_collision():
+	if not camera:
+		return
+
+	const HALF_TILE = 8
+
+	var _old_position = global_position
+
+	global_position.x = clamp(
+		global_position.x,
+		camera.limit_left + HALF_TILE,
+		camera.limit_right - HALF_TILE
+	)
+
+	if global_position.x != _old_position.x:
+		velocity.x = 0.0
+
 func handle_last_collision():
 	var collision = get_last_slide_collision()
 	
@@ -212,7 +232,7 @@ func handle_last_collision():
 
 	# keep the y velocity when colliding with a corner
 	if normal != round(normal):
-		velocity.y = old_velocity.y
+		velocity.y = _old_velocity.y
 
 	# head collision
 	if normal == Vector2.UP:
@@ -221,7 +241,7 @@ func handle_last_collision():
 		if collider.has_method("hit"):
 			collider.hit(self)
 
-func update_animation():
+func process_animation():
 	sprite.flip_h = is_facing_left
 	sprite.speed_scale = max(1.75, speed_scale * 5.0)
 	

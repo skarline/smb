@@ -1,13 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://byfj8qhvpjcw"]
+[gd_scene load_steps=9 format=3 uid="uid://byfj8qhvpjcw"]
 
 [ext_resource type="TileSet" uid="uid://cecbimox7mcnv" path="res://assets/tilesets/tileset.tres" id="1_6vmxt"]
 [ext_resource type="PackedScene" uid="uid://df00q74jhgta4" path="res://scenes/blocks/question_block.tscn" id="1_o10pm"]
 [ext_resource type="PackedScene" uid="uid://dyedtrdyumqly" path="res://scenes/characters/goomba.tscn" id="4_38siv"]
 [ext_resource type="PackedScene" uid="uid://dgnp0rhnp0sux" path="res://scenes/stage/camera.tscn" id="4_w1g1h"]
+[ext_resource type="PackedScene" uid="uid://7j5q4vy0tr03" path="res://scenes/stage/zone.tscn" id="5_2itge"]
 [ext_resource type="PackedScene" uid="uid://c30a23epjbrps" path="res://scenes/blocks/brick_block.tscn" id="7_0l3fy"]
 [ext_resource type="PackedScene" uid="uid://cbbuditkrn656" path="res://scenes/characters/player.tscn" id="8_tkm5h"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qraqc"]
+size = Vector2(3584, 240)
+
 [node name="Stage" type="Node2D"]
+
+[node name="Zone" parent="." instance=ExtResource("5_2itge")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zone"]
+position = Vector2(1744, -80)
+shape = SubResource("RectangleShape2D_qraqc")
+debug_color = Color(0, 0, 0, 0)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_6vmxt")
@@ -208,9 +219,14 @@ position = Vector2(2816, 200)
 
 [node name="Player" parent="." instance=ExtResource("8_tkm5h")]
 position = Vector2(48, 200)
+collision_layer = 8
 
 [node name="Camera" parent="Player" instance=ExtResource("4_w1g1h")]
-limit_top = 0
-limit_bottom = 240
 limit_smoothed = false
 position_smoothing_speed = 16.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.0
+drag_top_margin = 0.6
+drag_right_margin = 0.0
+drag_bottom_margin = 0.6

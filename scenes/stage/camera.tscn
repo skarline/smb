@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://dgnp0rhnp0sux"]
+[gd_scene load_steps=2 format=3 uid="uid://dgnp0rhnp0sux"]
+
+[ext_resource type="Script" path="res://scenes/stage/camera.gd" id="1_rod67"]
 
 [node name="Camera" type="Camera2D"]
+zoom = Vector2(2, 2)
 process_callback = 0
 limit_left = 0
 limit_top = -240
@@ -8,3 +11,4 @@ limit_bottom = 0
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+script = ExtResource("1_rod67")
