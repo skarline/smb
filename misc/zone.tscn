@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://7j5q4vy0tr03"]
 
-[ext_resource type="Script" path="res://scenes/stage/zone.gd" id="1_46grk"]
+[ext_resource type="Script" path="res://misc/zone.gd" id="1_46grk"]
 
 [node name="Zone" type="Area2D" groups=["zones"]]
 position = Vector2(48, 200)

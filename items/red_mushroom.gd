@@ -7,7 +7,7 @@ extends CharacterBody2D
 const SPEED: float = 60.0
 
 var spawner: Node = null
-var _left: bool = false
+var _is_facing_left: bool = false
 
 
 func _ready():
@@ -21,10 +21,10 @@ func _physics_process(delta):
 	if collision:
 		var normal = collision.get_normal()
 		if normal.x:
-			_left = normal.x < 0
+			_is_facing_left = normal.x < 0
 
-	velocity.x = -SPEED if _left else SPEED
-	velocity.y += min(Physics.MAX_FALL_SPEED, Physics.GRAVITY * delta)
+	velocity.x = -SPEED if _is_facing_left else SPEED
+	velocity.y = min(Physics.MAX_FALL_SPEED, velocity.y + Physics.GRAVITY * delta)
 
 	move_and_slide()
 
@@ -51,7 +51,7 @@ func setup_block_animation():
 	set_physics_process(true)
 
 
-func hit(body: Node):
+func hit(body: Node2D):
 	if body is QuestionBlock:
 		velocity.y = Physics.JUMP_SPEED
-		_left = body.position.x > position.x
+		_is_facing_left = body.position.x > position.x

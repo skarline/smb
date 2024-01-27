@@ -7,8 +7,8 @@ enum Item { NONE, SINGLE_COIN, MULTI_COIN, RED_MUSHROOM_OR_FIRE_FLOWER, GREEN_MU
 
 const ON_HIT_VELOCITY = -140
 
-const coin_particle_scene = preload("res://scenes/particles/coin_particle.tscn")
-const red_mushroom_scene = preload("res://scenes/powerups/red_mushroom.tscn")
+const coin_particle_scene = preload("res://particles/coin_particle.tscn")
+const red_mushroom_scene = preload("res://items/red_mushroom.tscn")
 
 @export var item: Item = Item.NONE
 

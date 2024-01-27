@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cirx0ipaw2v4s"]
-
-[ext_resource type="Script" path="res://scenes/behaviors/walk_behavior.gd" id="1_angwm"]
-
-[node name="WalkBehavior" type="Node"]
-script = ExtResource("1_angwm")

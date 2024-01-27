@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://c30a23epjbrps"]
 
-[ext_resource type="PackedScene" uid="uid://df00q74jhgta4" path="res://scenes/blocks/question_block.tscn" id="1_so4en"]
+[ext_resource type="PackedScene" uid="uid://df00q74jhgta4" path="res://blocks/question_block.tscn" id="1_so4en"]
 [ext_resource type="Texture2D" uid="uid://cbw3nxgte4ibj" path="res://assets/tilesets/overworld.png" id="2_7klea"]
-[ext_resource type="Script" path="res://scenes/blocks/brick_block.gd" id="2_ebyhf"]
+[ext_resource type="Script" path="res://blocks/brick_block.gd" id="2_ebyhf"]
 [ext_resource type="Texture2D" uid="uid://swkwgu4mnlcq" path="res://assets/sprites/empty_block.png" id="3_3brrq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kcw05"]

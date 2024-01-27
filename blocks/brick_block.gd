@@ -1,7 +1,7 @@
 class_name BrickBlock
 extends QuestionBlock
 
-var debris_scene = preload("res://scenes/particles/brick_block_debris.tscn")
+var debris_scene = preload("res://particles/brick_block_debris.tscn")
 
 const DEBRIS_VERTICAL_VELOCITY: float = -360.0
 

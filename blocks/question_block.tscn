@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://df00q74jhgta4"]
 
 [ext_resource type="Texture2D" uid="uid://cpwjveku4gyqg" path="res://assets/sprites/question_block.png" id="2_40ef5"]
-[ext_resource type="Script" path="res://scenes/blocks/question_block.gd" id="2_jpxdx"]
+[ext_resource type="Script" path="res://blocks/question_block.gd" id="2_jpxdx"]
 [ext_resource type="Texture2D" uid="uid://swkwgu4mnlcq" path="res://assets/sprites/empty_block.png" id="4_2tx5i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xh77r"]

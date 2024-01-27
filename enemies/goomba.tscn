@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://dyedtrdyumqly"]
+[gd_scene load_steps=8 format=3 uid="uid://dyedtrdyumqly"]
 
-[ext_resource type="Script" path="res://scenes/characters/goomba.gd" id="1_kindd"]
+[ext_resource type="Script" path="res://enemies/goomba.gd" id="1_kindd"]
 [ext_resource type="Texture2D" uid="uid://411uurvuibyl" path="res://assets/sprites/goomba.png" id="1_yukts"]
-[ext_resource type="PackedScene" uid="uid://cirx0ipaw2v4s" path="res://scenes/behaviors/walk_behavior.tscn" id="3_k3hjn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ordj"]
 atlas = ExtResource("1_yukts")
@@ -50,6 +49,7 @@ position = Vector2(9.14883e-10, 1)
 rotation = -0.00495885
 sprite_frames = SubResource("SpriteFrames_t5uig")
 animation = &"walk"
+autoplay = "walk"
 speed_scale = 1.5
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -65,17 +65,10 @@ shape = SubResource("RectangleShape2D_6j6xw")
 [node name="CollisionShape" type="CollisionPolygon2D" parent="."]
 visible = false
 position = Vector2(0, 8)
-polygon = PackedVector2Array(-5, -12, -7, -10, -7, -5, -2, 0, 2, 0, 7, -5, 7, -10, 5, -12)
-
-[node name="DeathTimer" type="Timer" parent="."]
-one_shot = true
-
-[node name="WalkBehavior" parent="." instance=ExtResource("3_k3hjn")]
-is_facing_left = true
+polygon = PackedVector2Array(-5, -12, -7, -10, -7, -2, -5, 0, 5, 0, 7, -2, 7, -10, 5, -12)
 
 [node name="VisibilityEnabler" type="VisibleOnScreenEnabler2D" parent="."]
 position = Vector2(0, 1)
 scale = Vector2(0.8, 0.8)
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
-[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

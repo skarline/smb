@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bvlddobs76gad"]
 
-[ext_resource type="Script" path="res://scenes/particles/brick_block_debris.gd" id="1_3qylh"]
+[ext_resource type="Script" path="res://particles/brick_block_debris.gd" id="1_3qylh"]
 [ext_resource type="Texture2D" uid="uid://cltljslw45vf" path="res://assets/sprites/block_debris.png" id="2_ujonp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xqmij"]
