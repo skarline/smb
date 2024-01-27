@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ThemeData" load_steps=3 format=3 uid="uid://d4dkw4dqjtgnv"]
+
+[ext_resource type="Script" path="res://themes/theme_data.gd" id="1_i1esm"]
+[ext_resource type="Texture2D" uid="uid://cbw3nxgte4ibj" path="res://assets/tilesets/overworld.png" id="2_mn3fw"]
+
+[resource]
+script = ExtResource("1_i1esm")
+background_color = Color(0.580392, 0.580392, 0.972549, 1)
+tile_set_texture = ExtResource("2_mn3fw")

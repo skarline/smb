@@ -308,11 +308,6 @@ libraries = {
 "": SubResource("AnimationLibrary_hjf8o")
 }
 
-[node name="CooldownTimer" type="Timer" parent="."]
-wait_time = 3.0
-one_shot = true
-
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]

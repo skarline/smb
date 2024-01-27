@@ -1,55 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://df00q74jhgta4"]
+[gd_scene load_steps=5 format=3 uid="uid://df00q74jhgta4"]
 
-[ext_resource type="Texture2D" uid="uid://cpwjveku4gyqg" path="res://assets/sprites/question_block.png" id="2_40ef5"]
+[ext_resource type="SpriteFrames" uid="uid://d1emq3qdnue2i" path="res://blocks/question_block_frames_overworld.tres" id="2_72mot"]
 [ext_resource type="Script" path="res://blocks/question_block.gd" id="2_jpxdx"]
-[ext_resource type="Texture2D" uid="uid://swkwgu4mnlcq" path="res://assets/sprites/empty_block.png" id="4_2tx5i"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xh77r"]
-atlas = ExtResource("2_40ef5")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eka6x"]
-atlas = ExtResource("2_40ef5")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ov72j"]
-atlas = ExtResource("2_40ef5")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j1nyq"]
-atlas = ExtResource("4_2tx5i")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_f1mhg"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xh77r")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xh77r")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xh77r")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_eka6x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ov72j")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j1nyq")
-}],
-"loop": true,
-"name": &"empty",
-"speed": 5.0
-}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4bs6b"]
 size = Vector2(16, 16)
@@ -62,7 +14,7 @@ script = ExtResource("2_jpxdx")
 item = 1
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_f1mhg")
+sprite_frames = ExtResource("2_72mot")
 autoplay = "default"
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]

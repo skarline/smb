@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ThemeData" load_steps=3 format=3 uid="uid://cvs2480xha6sr"]
+
+[ext_resource type="Script" path="res://themes/theme_data.gd" id="1_3tjc0"]
+[ext_resource type="Texture2D" uid="uid://vngkr1way7ng" path="res://assets/tilesets/underground.png" id="2_fpnae"]
+
+[resource]
+script = ExtResource("1_3tjc0")
+background_color = Color(0, 0, 0, 1)
+tile_set_texture = ExtResource("2_fpnae")

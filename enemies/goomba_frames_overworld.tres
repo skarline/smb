@@ -1,0 +1,37 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://briwoepw726as"]
+
+[ext_resource type="Texture2D" uid="uid://411uurvuibyl" path="res://assets/sprites/goomba.png" id="1_te1ye"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ordj"]
+atlas = ExtResource("1_te1ye")
+region = Rect2(34, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwvxy"]
+atlas = ExtResource("1_te1ye")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fs8li"]
+atlas = ExtResource("1_te1ye")
+region = Rect2(17, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ordj")
+}],
+"loop": true,
+"name": &"stomp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwvxy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fs8li")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 7.5
+}]

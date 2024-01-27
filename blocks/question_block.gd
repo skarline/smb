@@ -5,6 +5,12 @@ signal hit_finished
 
 enum Item { NONE, SINGLE_COIN, MULTI_COIN, RED_MUSHROOM_OR_FIRE_FLOWER, GREEN_MUSHROOM, STAR }
 
+const _THEMES = {
+	StageManager.StageTheme.OVERWORLD: preload("res://blocks/question_block_frames_overworld.tres"),
+	StageManager.StageTheme.UNDERGROUND:
+	preload("res://blocks/question_block_frames_underground.tres"),
+}
+
 const ON_HIT_VELOCITY = -140
 
 const coin_particle_scene = preload("res://particles/coin_particle.tscn")
@@ -21,6 +27,11 @@ var _velocity: float = 0
 var _item_instance: Node = null
 
 
+func _ready():
+	_set_theme(StageManager.theme)
+	StageManager.connect("theme_changed", _set_theme)
+
+
 func _physics_process(delta):
 	if not _hit:
 		sprite.offset = Vector2.ZERO
@@ -30,7 +41,7 @@ func _physics_process(delta):
 	sprite.offset.y += _velocity * delta
 
 	if sprite.offset.y >= 0:
-		on_hit_finished()
+		_on_hit_finished()
 
 
 func hit(body: Node):
@@ -72,9 +83,14 @@ func on_hit(body: Node):
 		_item_instance = null
 
 
-func on_hit_finished():
+func _on_hit_finished():
 	_hit = false
 	hit_finished.emit()
+
+
+func _set_theme(theme: StageManager.StageTheme):
+	sprite.frames = _THEMES[theme]
+	sprite.play(sprite.animation)
 
 
 func _on_hit_area_body_entered(body):

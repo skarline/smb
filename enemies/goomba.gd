@@ -10,6 +10,16 @@ const DESPAWN_TIME_SEC: float = 1.0
 
 var is_alive: bool = true
 
+const _THEMES = {
+	StageManager.StageTheme.OVERWORLD: preload("res://enemies/goomba_frames_overworld.tres"),
+	StageManager.StageTheme.UNDERGROUND: preload("res://enemies/goomba_frames_underground.tres"),
+}
+
+
+func _ready():
+	_set_theme(StageManager.theme)
+	StageManager.connect("theme_changed", _set_theme)
+
 
 func _physics_process(delta):
 	var collision = get_last_slide_collision()
@@ -34,6 +44,11 @@ func stomp():
 	is_alive = false
 
 	get_tree().create_timer(DESPAWN_TIME_SEC).connect("timeout", queue_free)
+
+
+func _set_theme(theme: StageManager.StageTheme):
+	sprite.frames = _THEMES[theme]
+	sprite.play(sprite.animation)
 
 
 func _on_hitbox_area_entered(area: Area2D):

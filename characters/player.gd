@@ -32,6 +32,8 @@ const SPEED_THRESHOLDS = [60, 138.75]
 const STOMP_SPEED = 240.0
 const STOMP_SPEED_CAP = -60.0
 
+const COOLDOWN_TIME_SEC = 3.0
+
 # Nodes
 @onready var camera = get_node_or_null("Camera")
 
@@ -91,7 +93,6 @@ var collected_item_ref: Node = null
 @onready var big_collision_shape: CollisionPolygon2D = $BigCollisionShape
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var cooldown_timer: Timer = $CooldownTimer
 
 func _ready():
 	_update_tree()
@@ -258,6 +259,11 @@ func process_animation():
 	else:
 		sprite.play("idle")
 
+	if has_cooldown:
+		modulate.a = 0.0 if modulate.a else 1.0
+	else:
+		modulate.a = 1.0
+
 func _update_tree():
 	var is_small = not state
 	var is_crouching_or_small = is_crouching or is_small
@@ -283,14 +289,11 @@ func take_hit():
 		pass
 	else:
 		transform(state - 1)
-		toggle_cooldown(true)
-		cooldown_timer.start()
+		_cooldown()
 
-func toggle_cooldown(value: bool):
-	has_cooldown = value
-
-	# update the sprite's alpha
-	modulate.a = 0.5 if value else 1.0
+func _cooldown():
+	has_cooldown = true
+	get_tree().create_timer(COOLDOWN_TIME_SEC).connect("timeout", func(): has_cooldown = false)
 
 func _on_transition_started():
 	sprite.visible = false
@@ -337,6 +340,3 @@ func _on_hitbox_body_entered(body: Node):
 
 func _on_animation_player_animation_finished(_anim_name):
 	Physics.enable()
-
-func _on_cooldown_timer_timeout():
-	toggle_cooldown(false)

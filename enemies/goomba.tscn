@@ -1,41 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dyedtrdyumqly"]
+[gd_scene load_steps=4 format=3 uid="uid://dyedtrdyumqly"]
 
 [ext_resource type="Script" path="res://enemies/goomba.gd" id="1_kindd"]
-[ext_resource type="Texture2D" uid="uid://411uurvuibyl" path="res://assets/sprites/goomba.png" id="1_yukts"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2ordj"]
-atlas = ExtResource("1_yukts")
-region = Rect2(34, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cwvxy"]
-atlas = ExtResource("1_yukts")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fs8li"]
-atlas = ExtResource("1_yukts")
-region = Rect2(17, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_t5uig"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2ordj")
-}],
-"loop": true,
-"name": &"stomp",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cwvxy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fs8li")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 5.0
-}]
+[ext_resource type="SpriteFrames" uid="uid://briwoepw726as" path="res://enemies/goomba_frames_overworld.tres" id="2_mtght"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6j6xw"]
 size = Vector2(10, 6)
@@ -45,12 +11,11 @@ collision_layer = 0
 script = ExtResource("1_kindd")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(9.14883e-10, 1)
-rotation = -0.00495885
-sprite_frames = SubResource("SpriteFrames_t5uig")
+position = Vector2(2.08165e-12, 1)
+sprite_frames = ExtResource("2_mtght")
 animation = &"walk"
 autoplay = "walk"
-speed_scale = 1.5
+offset = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="Hitbox" type="Area2D" parent="."]
 visible = false
